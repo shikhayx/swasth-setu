@@ -17,7 +17,7 @@
       --bg: #f8fafc;
       --ink: #0f172a;
       --mut: #64748b;
-      --card: #ffffff;
+      --card: rgba(255, 255, 255, 0.90);
       --line: #e2e8f0;
       --red: #ef4444;
       --amb: #f59e0b;
@@ -46,16 +46,68 @@
 
     * { box-sizing: border-box; }
 
+    /* Modern Ambient Healthcare Background with Mesh & Medical Grid */
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
-      background: radial-gradient(circle at 10% 15%, #f0fdfa 0%, #f8fafc 40%, #f1f5f9 100%);
+      background-color: #f8fafc;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(13, 148, 136, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.14) 0px, transparent 50%),
+        radial-gradient(at 50% 40%, rgba(20, 184, 166, 0.08) 0px, transparent 60%),
+        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(13, 148, 136, 0.14) 0px, transparent 50%),
+        radial-gradient(rgba(13, 148, 136, 0.12) 1.2px, transparent 1.2px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 28px 28px;
+      background-attachment: fixed;
       color: var(--ink);
       line-height: 1.5;
-      padding-block: 0 32px;
+      padding-block: 0 36px;
       padding-left: max(16px, env(safe-area-inset-left, 0px));
       padding-right: max(16px, env(safe-area-inset-right, 0px));
       min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Floating Gradient Glow Orbs */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -10vw;
+      left: -8vw;
+      width: 48vw;
+      height: 48vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(20, 184, 166, 0.28) 0%, rgba(20, 184, 166, 0) 70%);
+      filter: blur(80px);
+      z-index: -1;
+      pointer-events: none;
+      animation: floatOrb 18s ease-in-out infinite alternate;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      bottom: -12vw;
+      right: -8vw;
+      width: 52vw;
+      height: 52vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.22) 0%, rgba(16, 185, 129, 0.18) 40%, transparent 70%);
+      filter: blur(90px);
+      z-index: -1;
+      pointer-events: none;
+      animation: floatOrb2 22s ease-in-out infinite alternate;
+    }
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(6vw, 4vw) scale(1.1); }
+      100% { transform: translate(-3vw, 7vw) scale(0.96); }
+    }
+    @keyframes floatOrb2 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-5vw, -6vw) scale(1.12); }
+      100% { transform: translate(4vw, -4vw) scale(1); }
     }
 
     /* Top Sticky Glassmorphism Header */
@@ -63,60 +115,71 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      padding: 12px 18px;
-      background: rgba(255, 255, 255, 0.92) !important;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--line);
-      box-shadow: 0 4px 20px -2px rgba(15, 118, 110, 0.05);
+      gap: 12px;
+      padding: 13px 22px;
+      background: rgba(255, 255, 255, 0.86) !important;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 4px 24px -2px rgba(15, 118, 110, 0.06);
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 25;
       flex-wrap: wrap;
       margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
     }
-    .brand { font-size: 20px; font-weight: 800; color: var(--pri); display: flex; align-items: center; gap: 6px; }
+    .brand { font-size: 21px; font-weight: 800; color: var(--pri); display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px; }
     .bar-r { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .bar select { padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-weight: 500; font-size: 13px; }
+    .bar select { padding: 6px 12px; border-radius: 9px; border: 1px solid var(--line); background: rgba(255,255,255,0.9); color: var(--ink); font-weight: 600; font-size: 13px; }
     
     .offbanner {
       background: var(--ambbg);
       color: var(--ambfg);
       border-bottom: 1px solid var(--ambbd);
-      padding: 8px 14px;
+      padding: 9px 14px;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       text-align: center;
+      backdrop-filter: blur(10px);
     }
 
-    main { max-width: 980px; margin: 0 auto; padding-block: 16px; min-width: 0; }
+    main { max-width: 980px; margin: 0 auto; padding-block: 18px; min-width: 0; }
 
-    /* Polished Card Surface */
+    /* Ultra-Clean Glassmorphic Cards with Soft Elevation */
     .card {
-      background: var(--card);
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
-      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.02),
+        0 12px 30px -4px rgba(15, 118, 110, 0.07),
+        inset 0 1px 1px rgba(255, 255, 255, 0.95);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
     }
     .card:hover {
-      box-shadow: 0 8px 24px -4px rgba(15, 118, 110, 0.06);
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 16px -2px rgba(0, 0, 0, 0.03),
+        0 20px 40px -4px rgba(15, 118, 110, 0.12),
+        inset 0 1px 1px #ffffff;
+      border-color: rgba(20, 184, 166, 0.35);
     }
 
-    h2 { margin: 0 0 6px; font-size: 20px; font-weight: 700; color: var(--ink); }
-    h3 { margin: 0 0 10px; font-size: 16px; font-weight: 700; color: var(--ink); }
+    h2 { margin: 0 0 6px; font-size: 21px; font-weight: 700; color: var(--ink); letter-spacing: -0.2px; }
+    h3 { margin: 0 0 10px; font-size: 17px; font-weight: 700; color: var(--ink); }
     .muted { color: var(--mut); font-size: 13px; }
 
     /* Modern Buttons */
     .btn {
-      background: var(--pri);
+      background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
       color: #fff;
       border: 0;
-      padding: 10px 16px;
-      border-radius: 10px;
+      padding: 10px 18px;
+      border-radius: 11px;
       font-size: 14px;
       cursor: pointer;
       font-weight: 600;
@@ -124,30 +187,30 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.15s ease;
-      box-shadow: 0 2px 6px rgba(13, 148, 136, 0.2);
+      transition: all 0.18s ease;
+      box-shadow: 0 3px 10px rgba(13, 148, 136, 0.25);
     }
     .btn:hover {
-      background: var(--pri-dark);
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+      box-shadow: 0 6px 16px rgba(13, 148, 136, 0.35);
     }
-    .btn.sm { padding: 6px 12px; font-size: 13px; }
+    .btn.sm { padding: 6px 12px; font-size: 13px; border-radius: 8px; }
     .btn.ghost { background: transparent; border: 1px solid var(--pri); color: var(--pri); box-shadow: none; }
     .btn.ghost:hover { background: var(--soft); }
-    .btn.out { background: #fff; color: var(--pri-t); border: 1px solid var(--pri); box-shadow: none; }
-    .btn.out:hover { background: var(--soft); }
-    .btn.red { background: var(--red); box-shadow: 0 2px 6px rgba(239, 68, 68, 0.2); }
-    .btn.red:hover { background: #dc2626; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
-    .btn.amb { background: var(--amb); box-shadow: 0 2px 6px rgba(245, 158, 11, 0.2); }
-    .btn.amb:hover { background: #d97706; }
+    .btn.out { background: rgba(255, 255, 255, 0.9); color: var(--pri-t); border: 1px solid var(--pri); box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+    .btn.out:hover { background: var(--soft); border-color: var(--pri-dark); }
+    .btn.red { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 3px 10px rgba(239, 68, 68, 0.25); }
+    .btn.red:hover { background: #b91c1c; box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35); }
+    .btn.amb { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 3px 10px rgba(245, 158, 11, 0.25); }
+    .btn.amb:hover { background: #b45309; }
     .btn.grey { background: #64748b; box-shadow: none; }
     .btn.grey:hover { background: #475569; }
 
     .chip {
       border: 0;
       border-radius: 999px;
-      padding: 5px 12px;
+      padding: 5px 13px;
       font-size: 12px;
       cursor: pointer;
       font-weight: 600;
@@ -158,22 +221,22 @@
 
     input, select, textarea {
       width: 100%;
-      padding: 10px 12px;
+      padding: 10px 14px;
       border: 1px solid var(--inpb);
-      border-radius: 10px;
+      border-radius: 11px;
       font-size: 14px;
       font-family: inherit;
-      background: var(--inp);
+      background: #ffffff;
       color: var(--ink);
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--pri);
-      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
+      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.22);
     }
     label { display: block; font-size: 13px; font-weight: 600; margin: 10px 0 4px; color: #334155; }
-    .grid { display: grid; gap: 14px; }
+    .grid { display: grid; gap: 16px; }
     .g2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
     .row { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
     .row > * { flex: 1; }
@@ -181,10 +244,10 @@
     /* Modern Tabs */
     .tabs {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       overflow-x: auto;
-      padding-bottom: 2px;
-      margin-bottom: 16px;
+      padding-bottom: 4px;
+      margin-bottom: 18px;
       border-bottom: 1px solid var(--line);
     }
     .tab {
@@ -227,17 +290,19 @@
     }
     .item .t { font-weight: 700; font-size: 15px; }
 
-    /* Hero Section */
+    /* Glowing Hero Section */
     .hero {
-      background: linear-gradient(135deg, #e6fffa 0%, #f0fdf4 100%) !important;
-      border: 1px solid #ccfbf1 !important;
-      border-radius: 20px !important;
-      padding: 34px 20px !important;
-      box-shadow: 0 10px 25px -5px rgba(20, 184, 166, 0.1) !important;
+      background: linear-gradient(135deg, rgba(230, 255, 250, 0.95) 0%, rgba(240, 253, 244, 0.92) 50%, rgba(236, 254, 255, 0.95) 100%) !important;
+      border: 1px solid rgba(204, 251, 241, 0.9) !important;
+      border-radius: 24px !important;
+      padding: 38px 24px !important;
+      box-shadow: 0 14px 35px -5px rgba(20, 184, 166, 0.12), inset 0 1px 1px #ffffff !important;
       text-align: center;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
     }
-    .hero h1 { margin: 0 0 6px; font-size: 32px; color: var(--pri-t); font-weight: 800; letter-spacing: -0.5px; }
+    .hero h1 { margin: 0 0 8px; font-size: 34px; color: var(--pri-t); font-weight: 800; letter-spacing: -0.5px; }
 
     .mic {
       width: auto !important;
@@ -245,7 +310,7 @@
       padding: 8px 14px;
       border-radius: 10px;
       border: 1px solid var(--pri);
-      background: var(--card);
+      background: #fff;
       color: var(--ink);
       cursor: pointer;
       font-size: 14px;
@@ -261,14 +326,15 @@
       color: var(--pri-t);
       text-align: center;
       background: var(--codebg);
-      border-radius: 14px;
-      padding: 12px;
-      border: 1px dashed var(--pri2);
+      border-radius: 16px;
+      padding: 14px;
+      border: 2px dashed var(--pri2);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
     }
     .qr { display: flex; justify-content: center; padding: 12px; }
     .qrfallback { font-size: 12px; word-break: break-all; background: var(--fbbg); padding: 10px; border-radius: 8px; border: 1px solid var(--line); }
 
-    .aycard { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 8px 20px rgba(234, 88, 12, 0.25); }
+    .aycard { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; border-radius: 20px; padding: 22px; box-shadow: 0 10px 25px rgba(234, 88, 12, 0.28); }
     .aycard .big { font-size: 32px; font-weight: 800; }
     .meter { height: 12px; background: rgba(255, 255, 255, .35); border-radius: 99px; overflow: hidden; margin: 10px 0; }
     .meter > div { height: 100%; background: #fff; border-radius: 99px; }
@@ -289,7 +355,7 @@
       inset: 0;
       display: none;
       background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
       z-index: 50;
       align-items: center;
       justify-content: center;
@@ -297,15 +363,15 @@
     }
     #modal.show { display: flex; }
     #modal .box {
-      background: var(--card);
+      background: rgba(255, 255, 255, 0.98);
       color: var(--ink);
-      border-radius: 20px;
-      padding: 22px;
+      border-radius: 22px;
+      padding: 24px;
       max-width: 520px;
       width: 100%;
       max-height: 90vh;
       overflow: auto;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22);
       animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     @keyframes modalPop {
@@ -320,14 +386,14 @@
       transform: translateX(-50%);
       background: var(--toastbg);
       color: var(--toastfg);
-      padding: 10px 20px;
+      padding: 11px 22px;
       border-radius: 12px;
       font-size: 14px;
       font-weight: 500;
       display: none;
       z-index: 60;
       max-width: 90%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
     }
 
     pre.draft { white-space: pre-wrap; overflow-x: auto; background: var(--fbbg); padding: 12px; border-radius: 12px; font-size: 13px; border: 1px solid var(--line); }
@@ -335,17 +401,17 @@
 
     .role { border-top: 4px solid var(--pri); }
     .role.doc { border-top-color: #2563eb; }
-    .role.doc .btn { background: #2563eb; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2); }
-    .role.doc .btn:hover { background: #1d4ed8; }
+    .role.doc .btn { background: linear-gradient(135deg, #2563eb, #1d4ed8); box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25); }
+    .role.doc .btn:hover { background: #1e40af; }
     .flist { margin: 8px 0 12px; padding-left: 20px; display: grid; gap: 8px; font-size: 14px; color: #475569; }
 
     /* Scanner Viewfinder & Laser Animation */
     .scanner-wrap {
       position: relative;
       overflow: hidden;
-      border-radius: 16px;
+      border-radius: 18px;
       background: #000;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.35);
     }
     .scanner-reticle {
       position: absolute;
@@ -395,7 +461,7 @@
    dynamic share codes, offline lockscreen emergency QRs, and 
    SHA-256 tamper-evident hash-chain audit logging.
    ============================================================ */
-const LS = 'swasthsetu_v1', LSL = 'swasthsetu_lang';
+const LS = 'swasthsetu_v2', LSL = 'swasthsetu_lang';
 const LANGCODE = { en: 'en-IN', hi: 'hi-IN', mr: 'mr-IN' };
 const DAY = 86400000;
 
@@ -521,6 +587,30 @@ function sha256(str) {
   return h.map((x) => ('00000000' + (x >>> 0).toString(16)).slice(-8)).join('');
 }
 
+/* ---------- Authentication & Security ---------- */
+const PW_ROUNDS = 3000, MAX_TRIES = 5, LOCK_MS = 60000, IDLE_MS = 10 * 60 * 1000, LOCK_KEY = 'swasthsetu_lock';
+function newSalt() { const a = new Uint8Array(16); crypto.getRandomValues(a); return Array.from(a, (b) => ('0' + b.toString(16)).slice(-2)).join(''); }
+function hashPw(pw, salt) { let h = sha256(salt + '|' + pw); for (let i = 0; i < PW_ROUNDS; i++) h = sha256(h + salt + pw); return h; }
+function safeEq(a, b) { if (a.length !== b.length) return false; let r = 0; for (let i = 0; i < a.length; i++) r |= a.charCodeAt(i) ^ b.charCodeAt(i); return r === 0; }
+function setPassword(acct, pw) { acct.salt = newSalt(); acct.pwHash = hashPw(pw, acct.salt); }
+function strongPw(pw) { return typeof pw === 'string' && pw.length >= 8 && /[A-Za-z]/.test(pw) && /\d/.test(pw); }
+function lockState() { try { return JSON.parse(localStorage.getItem(LOCK_KEY)) || {}; } catch (e) { return {}; } }
+function lockedFor(key) { const s = lockState()[key]; if (!s || !s.until) return 0; const r = s.until - Date.now(); return r > 0 ? Math.ceil(r / 1000) : 0; }
+function failAttempt(key) {
+  const o = lockState(); const s = o[key] || { n: 0 }; s.n++;
+  const locked = s.n >= MAX_TRIES; if (locked) { s.until = Date.now() + LOCK_MS; s.n = 0; }
+  o[key] = s; try { localStorage.setItem(LOCK_KEY, JSON.stringify(o)); } catch (e) { /* ignore */ }
+  return locked;
+}
+function clearAttempts(key) { const o = lockState(); delete o[key]; try { localStorage.setItem(LOCK_KEY, JSON.stringify(o)); } catch (e) { /* ignore */ } }
+function secureCode() { return String(100000 + (crypto.getRandomValues(new Uint32Array(1))[0] % 900000)); }
+let idleT = null;
+function bumpIdle() {
+  clearTimeout(idleT);
+  if (me) idleT = setTimeout(() => { if (me) { A.logout(); toast('Logged out after 10 minutes of inactivity'); } }, IDLE_MS);
+}
+['click', 'keydown', 'touchstart'].forEach((ev) => document.addEventListener(ev, bumpIdle, { passive: true }));
+
 /* ---------- Hash-chain audit log ---------- */
 function addLogTo(s, actor, role, pid, action, detail, ts) {
   const prev = s.logs.length ? s.logs[s.logs.length - 1].hash : 'GENESIS';
@@ -560,8 +650,8 @@ function seed() {
     conditions: 'Asthma', meds: 'Salbutamol inhaler', ecName: 'Meera Kulkarni (mother)', ecPhone: '+91 9765432122',
     abha: '91-5555-6666-7777', ayushman: null
   });
-  s.doctors.push({ id: 'd1', name: 'Dr. Anita Sharma', hospital: 'City Hospital, Mumbai' });
-  s.doctors.push({ id: 'd2', name: 'Dr. Rahul Mehta', hospital: 'Sunrise Clinic, Pune' });
+  s.doctors.push({ id: 'd1', name: 'Dr. Anita Sharma', hospital: 'City Hospital, Mumbai', regNo: 'MMC-2019-1001' });
+  s.doctors.push({ id: 'd2', name: 'Dr. Rahul Mehta', hospital: 'Sunrise Clinic, Pune', regNo: 'MMC-2020-2002' });
   const R = (pid, cat, test, title, hospital, doctor, date, notes) =>
     s.records.push({ id: uid(), pid, cat, test, title, hospital, doctor, date, notes, by: 'seed' });
   R('p1', 'Lab Test', 'CBC', 'CBC (Complete Blood Count)', 'Lab C - Thyrocare, Pune', 'Dr. Rahul Mehta', dago(3), 'Hb 11.2 g/dL, slightly low.');
@@ -575,6 +665,8 @@ function seed() {
   addLogTo(s, 'Dr. Rahul Mehta', 'doctor', 'p1', 'RECORD_ADDED', 'Visit Note: Diabetes follow-up', Date.now() - 12 * DAY + 600000);
   addLogTo(s, 'Dr. S. Joshi', 'doctor', 'p1', 'VIEWED_RECORDS', 'Opened via share code', Date.now() - 20 * DAY);
   addLogTo(s, 'Dr. Rahul Mehta', 'doctor', 'p1', 'VIEWED_RECORDS', 'Opened via share code', Date.now() - 3 * DAY);
+  const DEMO_PW = { p1: 'Ramesh@123', p2: 'Aarav@123', d1: 'Anita@123', d2: 'Rahul@123' };
+  s.patients.concat(s.doctors).forEach((a) => setPassword(a, DEMO_PW[a.id]));
   return s;
 }
 function load() {
@@ -622,25 +714,26 @@ function render() {
 }
 
 function loginView() {
-  const pOpts = S.patients.map((p) => '<option value="' + p.id + '">' + esc(p.name) + '</option>').join('');
-  const dOpts = S.doctors.map((d) => '<option value="' + d.id + '">' + esc(d.name) + ' - ' + esc(d.hospital) + '</option>').join('');
-  return '<div class="hero"><h1>' + t('appName') + '</h1><p class="muted" style="font-size:16px">' + t('tagline') + '</p><p class="muted">Choose your profile to begin</p></div>' +
+  return '<div class="hero"><h1>' + t('appName') + '</h1><p class="muted" style="font-size:16px">' + t('tagline') + '</p><p class="muted">Sign in to continue</p></div>' +
     '<div class="grid g2">' +
     '<section class="card role pat"><h2>👤 I am a Patient</h2><div class="muted">Maintain full ownership of your records and grant temporary consent</div>' +
     '<ul class="flist"><li>Unified timeline of all prior records</li><li>Share with 6-digit code or dynamic QR</li><li>Tamper-evident access audit log</li><li>Duplicate test checker (save money)</li><li>Ayushman Bharat cover & pre-auth</li><li>Offline emergency card for lock-screen</li></ul>' +
-    '<label>' + t('selectUser') + '</label><select id="pSel">' + pOpts + '</select>' +
-    '<p><button class="btn" data-act="loginP">Continue as patient</button></p>' +
+    '<form data-form="loginP"><label>ABHA ID</label><input name="id" placeholder="91-XXXX-XXXX-XXXX" autocomplete="username" required>' +
+    '<label>Password</label><input name="pw" type="password" autocomplete="current-password" required>' +
+    '<p><button class="btn">🔐 Sign in as patient</button></p></form>' +
     '<details><summary>' + t('register') + '</summary><form data-form="register">' +
     '<label>Name</label><input name="name" required><label>Age</label><input name="age" type="number" required>' +
     '<label>' + t('bloodGroup') + '</label><input name="blood" placeholder="B+" required><label>' + t('allergies') + '</label><input name="allergies" placeholder="None">' +
     '<label>' + t('conditions') + '</label><input name="conditions" placeholder="e.g. Diabetes">' +
     '<label>Emergency contact name</label><input name="ecName" required><label>Emergency contact phone</label><input name="ecPhone" required>' +
+    '<label>Create password (min 8 chars, letters + numbers)</label><input name="pw" type="password" minlength="8" autocomplete="new-password" required><label>Confirm password</label><input name="pw2" type="password" minlength="8" autocomplete="new-password" required>' +
     '<p><button class="btn">' + t('register') + '</button></p></form></details></section>' +
     '<section class="card role doc"><h2>🩺 I am a Doctor / Clinician</h2><div class="muted">Access complete history via smart QR scan and eliminate repeat investigations</div>' +
     '<ul class="flist"><li>Instant QR scanner for share codes & emergency cards</li><li>Add visit notes, tests & prescriptions</li><li>Real-time duplicate test alert</li><li>Break-glass emergency triage access</li><li>Ayushman Bharat pre-auth draft generator</li><li>Voice notes with local language transcription</li></ul>' +
-    '<label>' + t('selectUser') + '</label><select id="dSel">' + dOpts + '</select>' +
-    '<p><button class="btn" data-act="loginD">Continue as doctor</button></p></section></div>' +
-    '<p class="muted" style="text-align:center">Demo tip: Open this page in two separate browser tabs (one Patient, one Doctor) to test live QR scanning & sharing.</p>';
+    '<form data-form="loginD"><label>Medical registration no.</label><input name="id" placeholder="e.g. MMC-2019-1001" autocomplete="username" required>' +
+    '<label>Password</label><input name="pw" type="password" autocomplete="current-password" required>' +
+    '<p><button class="btn">🔐 Sign in as doctor</button></p></form></section></div>' +
+    '<p class="muted" style="text-align:center">Demo tip: open two browser tabs (one Patient, one Doctor) to test consent-based sharing. Demo credentials are in README.md.</p>';
 }
 
 function profileCard(p) {
@@ -704,7 +797,8 @@ const ACTION_LABEL = {
   VIEWED_RECORDS: '👁️ viewed your records', RECORD_ADDED: '➕ added a clinical record', RECORD_UPLOADED: '⬆️ uploaded a record',
   SHARE_CREATED: '🔗 created a share code', SHARE_REVOKED: '⛔ revoked a share code', EMERGENCY_ACCESS: '🚨 EMERGENCY access (break-glass)',
   DUP_ALERT_CANCELLED: '🛑 cancelled a duplicate test after alert', DUP_ALERT_OVERRIDDEN: '⚠️ repeated a test despite alert', CARD_LINKED: '💳 linked Ayushman card',
-  PREAUTH_DRAFT: '📄 prepared insurance pre-auth draft'
+  PREAUTH_DRAFT: '📄 prepared insurance pre-auth draft',
+  LOGIN_OK: '🔓 signed in', LOGOUT: '🔒 signed out', LOGIN_FAILED: '⛔ FAILED sign-in attempt', ACCOUNT_CREATED: '🆕 account created'
 };
 function tAccess(p) {
   const logs = S.logs.filter((l) => l.pid === p.id).slice().reverse();
@@ -754,6 +848,10 @@ function tCheck(p) {
 function doctorView() {
   const d = D(me.id);
   if (!d) { setMe(null); return loginView(); }
+  if (ui.view && ui.view.mode === 'grant') {
+    const gg = S.grants.find((x) => x.id === ui.view.gid);
+    if (!gg || gg.revoked || new Date(gg.exp) <= new Date() || gg.did !== me.id) { ui.view = null; setTimeout(() => toast('Access expired or revoked by patient'), 0); }
+  }
   if (ui.view) return patientDetail(d);
   const tabs = [['home', '👥', t('patients')], ['emer', '🚨', t('emergency')]];
   const tabBar = '<div class="tabs">' + tabs.map((x) => '<button class="tab ' + (ui.tab === x[0] ? 'act' : '') + '" data-act="tab" data-arg="' + x[0] + '">' + x[1] + ' ' + x[2] + '</button>').join('') + '</div>';
@@ -761,7 +859,7 @@ function doctorView() {
   if (ui.tab === 'emer') {
     return head + tabBar + '<div class="card" style="border:2px solid var(--red)"><h3>🚨 Break-glass emergency triage access</h3>' +
       '<p class="muted">Use only when the patient is unconscious or in critical condition. Shows <b>vital baselines only</b> (blood group, allergies, active meds). Immediately alerts the family and creates an immutable audit trail entry.</p>' +
-      '<form data-form="emer"><label>Patient ABHA ID or name</label><input name="q" placeholder="e.g. 91-1234-5678-9012 or Ramesh" required>' +
+      '<form data-form="emer"><label>Patient ABHA ID (exact)</label><input name="q" placeholder="e.g. 91-1234-5678-9012" required>' +
       '<label>Reason for emergency access</label><div class="row"><textarea id="emReason" name="reason" rows="2" placeholder="e.g. Road accident trauma, unconscious in ER" required></textarea>' + micBtn('emReason') + '</div>' +
       '<label style="font-weight:400"><input type="checkbox" name="ok" required style="width:auto"> I declare under medical oath that this is a life-threatening emergency.</label>' +
       '<p><button class="btn red">🚨 Activate emergency access</button></p></form></div>';
@@ -806,13 +904,11 @@ function patientDetail(d) {
 /* ---------- Actions & State Management ---------- */
 const A = {
   tab(x) { ui.tab = x; render(); },
-  loginP() { setMe({ role: 'patient', id: $('#pSel').value }); ui.tab = 'timeline'; ui.view = null; render(); },
-  loginD() { setMe({ role: 'doctor', id: $('#dSel').value }); ui.tab = 'home'; ui.view = null; render(); },
-  logout() { setMe(null); ui.view = null; auditMsg = null; checkMsg = null; render(); },
+  logout() { if (me && me.role === 'patient' && P(me.id)) { addLog(P(me.id).name, 'patient', me.id, 'LOGOUT', ''); save(); } closeModal(); setMe(null); ui.view = null; auditMsg = null; checkMsg = null; clearTimeout(idleT); render(); },
   toggleOffline() { ui.fakeOffline = !ui.fakeOffline; if (isOnline()) trySync(); render(); },
   back() { ui.view = null; render(); },
-  revoke(id) { const g = S.grants.find((x) => x.id === id); if (g) { g.revoked = true; addLog(P(g.pid).name, 'patient', g.pid, 'SHARE_REVOKED', 'Code ' + g.code); save(); toast('Access revoked immediately'); render(); } },
-  openGrant(id) { const g = S.grants.find((x) => x.id === id); if (!g) return; addLog(D(me.id).name, 'doctor', g.pid, 'VIEWED_RECORDS', 'Re-opened shared records'); save(); ui.view = { pid: g.pid, mode: 'grant' }; render(); },
+  revoke(id) { const g = S.grants.find((x) => x.id === id && me && me.role === 'patient' && x.pid === me.id); if (g) { g.revoked = true; addLog(P(g.pid).name, 'patient', g.pid, 'SHARE_REVOKED', 'Code ' + g.code); save(); toast('Access revoked immediately'); render(); } },
+  openGrant(id) { const g = S.grants.find((x) => x.id === id && me && me.role === 'doctor' && x.did === me.id && !x.revoked && new Date(x.exp) > new Date()); if (!g) { toast('Access expired or not permitted'); return; } addLog(D(me.id).name, 'doctor', g.pid, 'VIEWED_RECORDS', 'Re-opened shared records'); save(); ui.view = { pid: g.pid, mode: 'grant', gid: g.id }; render(); },
   verify() { auditMsg = verifyChain(); render(); },
   tamper() {
     const l = S.logs.find((x) => x.role === 'doctor' && x.pid === me.id);
@@ -866,11 +962,34 @@ function trySync() {
   if (n.length) { n.forEach((r) => { r.pending = false; }); save(); toast('🔄 Synced ' + n.length + ' offline record(s)'); }
 }
 
+function doLogin(role, f) {
+  const d = Object.fromEntries(new FormData(f)); const ident = String(d.id || '').trim().toLowerCase(); const pw = String(d.pw || '');
+  const key = 'login:' + role + ':' + ident; const wait = lockedFor(key);
+  if (wait) { toast('Too many failed attempts. Try again in ' + wait + ' seconds.'); return; }
+  const acct = role === 'patient' ? S.patients.find((x) => (x.abha || '').toLowerCase() === ident) : S.doctors.find((x) => (x.regNo || '').toLowerCase() === ident);
+  const ok = !!(acct && acct.pwHash && safeEq(hashPw(pw, acct.salt), acct.pwHash));
+  if (!acct) hashPw(pw, 'decoy');
+  if (!ok) {
+    const locked = failAttempt(key);
+    if (acct && role === 'patient') { addLog('Unknown sign-in attempt', 'system', acct.id, 'LOGIN_FAILED', locked ? 'Account locked for 60s after 5 wrong passwords' : 'Wrong password'); save(); }
+    toast(locked ? 'Too many failed attempts. Locked for 60 seconds.' : 'Invalid ID or password.');
+    return;
+  }
+  clearAttempts(key);
+  setMe({ role, id: acct.id }); ui.tab = role === 'patient' ? 'timeline' : 'home'; ui.view = null;
+  if (role === 'patient') { addLog(acct.name, 'patient', acct.id, 'LOGIN_OK', ''); save(); }
+  bumpIdle(); render();
+}
+
 const F = {
+  loginP(f) { doLogin('patient', f); },
+  loginD(f) { doLogin('doctor', f); },
   register(f) {
     const d = Object.fromEntries(new FormData(f));
+    if (!strongPw(d.pw)) { toast('Password must be 8+ characters with letters and numbers.'); return; }
+    if (d.pw !== d.pw2) { toast('Passwords do not match.'); return; }
     const p = { id: 'p' + uid(), name: d.name, age: +d.age, blood: d.blood, allergies: d.allergies || 'None', conditions: d.conditions || 'None', meds: '', ecName: d.ecName, ecPhone: d.ecPhone, abha: '91-' + Math.floor(1000 + Math.random() * 9000) + '-' + Math.floor(1000 + Math.random() * 9000) + '-' + Math.floor(1000 + Math.random() * 9000), ayushman: null };
-    S.patients.push(p); save(); setMe({ role: 'patient', id: p.id }); ui.tab = 'timeline'; toast('Profile created with demo ABHA ID'); render();
+    setPassword(p, d.pw); S.patients.push(p); addLog(p.name, 'patient', p.id, 'ACCOUNT_CREATED', ''); save(); setMe({ role: 'patient', id: p.id }); ui.tab = 'timeline'; ui.view = null; bumpIdle(); render(); modal('<h3>✅ Account created</h3><p>Your ABHA login ID is:</p><p style="font-size:20px;font-weight:700">' + esc(p.abha) + '</p><p class="muted">Save this ID. You need it with your password to sign in next time.</p><p><button class="btn" data-act="closeModal">Got it</button></p>');
   },
   upload(f) {
     const d = Object.fromEntries(new FormData(f)); const file = f.querySelector('input[type=file]').files[0];
@@ -885,7 +1004,7 @@ const F = {
   },
   share(f) {
     const hrs = +new FormData(f).get('dur'); const p = P(me.id);
-    const g = { id: uid(), pid: p.id, code: String(Math.floor(100000 + Math.random() * 900000)), exp: new Date(Date.now() + hrs * 3600000).toISOString(), did: null, revoked: false };
+    const g = { id: uid(), pid: p.id, code: secureCode(), exp: new Date(Date.now() + hrs * 3600000).toISOString(), did: null, revoked: false };
     S.grants.push(g); addLog(p.name, 'patient', p.id, 'SHARE_CREATED', 'Code valid for ' + hrs + 'h'); save(); render(); window.scrollTo(0, 0); toast('Code generated: ' + g.code);
   },
   link(f) {
@@ -917,8 +1036,10 @@ const F = {
   },
   emer(f) {
     const d = Object.fromEntries(new FormData(f)); const q = d.q.trim().toLowerCase(); const doc = D(me.id);
-    const p = S.patients.find((x) => (x.abha || '').toLowerCase() === q || x.name.toLowerCase().includes(q));
-    if (!p) { toast('Patient not found in registry'); return; }
+    const ek = 'emer:' + doc.id; const ew = lockedFor(ek); if (ew) { toast('Too many failed lookups. Try again in ' + ew + 's.'); return; }
+    const p = S.patients.find((x) => (x.abha || '').toLowerCase() === q);
+    if (!p) { toast(failAttempt(ek) ? 'Too many failed lookups. Locked for 60 seconds.' : 'No patient with this exact ABHA ID'); return; }
+    clearAttempts(ek);
     addLog(doc.name, 'doctor', p.id, 'EMERGENCY_ACCESS', 'Reason: ' + d.reason + ' @ ' + doc.hospital);
     const msg = '🚨 <b>Emergency access</b> to your vital records by <b>' + esc(doc.name) + '</b> (' + esc(doc.hospital) + '). Reason: ' + esc(d.reason) + '<br><span class="muted">📲 SMS broadcast dispatched to ' + esc(p.ecName) + ' ' + esc(p.ecPhone) + '</span>';
     S.notifs.push({ id: uid(), pid: p.id, kind: 'family', ts: new Date().toISOString(), read: false, msg });
@@ -963,12 +1084,17 @@ function stopScan() {
 }
 
 function openByCode(code) {
+  if (!me || me.role !== 'doctor') { toast('Sign in as a doctor first'); return false; }
+  const ck = 'code:' + me.id; const w = lockedFor(ck);
+  if (w) { toast('Too many wrong codes. Try again in ' + w + ' seconds.'); return false; }
   const g = S.grants.find((x) => x.code === code && !x.revoked && new Date(x.exp) > new Date());
-  if (!g) { toast('Invalid or expired share code'); return false; }
+  if (!g) { toast(failAttempt(ck) ? 'Too many wrong codes. Locked for 60 seconds.' : 'Invalid or expired share code'); return false; }
+  if (g.did && g.did !== me.id) { toast('This code was already used by another doctor'); return false; }
+  clearAttempts(ck);
   g.did = me.id;
   addLog(D(me.id).name, 'doctor', g.pid, 'VIEWED_RECORDS', 'Opened via share code');
   save();
-  ui.view = { pid: g.pid, mode: 'grant' };
+  ui.view = { pid: g.pid, mode: 'grant', gid: g.id };
   playBeep(980, 'sine', 0.15);
   if (navigator.vibrate) navigator.vibrate(80);
   toast('Access granted for ' + P(g.pid).name);
@@ -1139,7 +1265,9 @@ document.addEventListener('submit', (e) => {
   const f = e.target.closest('form[data-form]');
   if (!f) return;
   e.preventDefault();
-  F[f.dataset.form](f);
+  const need = { upload: 'patient', share: 'patient', link: 'patient', check: 'patient', opencode: 'doctor', addrec: 'doctor', emer: 'doctor', preauth: 'doctor' }[f.dataset.form];
+  if (need && (!me || me.role !== need)) { toast('Not authorised'); return; }
+  if (F[f.dataset.form]) F[f.dataset.form](f);
 });
 document.addEventListener('change', (e) => {
   if (e.target.id === 'lang') {
