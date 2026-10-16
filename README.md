@@ -2,6 +2,13 @@
 ### Healthcare Continuity & Diagnostic Optimization Platform
 *Software Track 2 — Problem Statement: Healthcare Continuity Platform*
 
+[![Release](https://img.shields.io/badge/Release-v1.0.0-teal.svg)](#)
+[![Track](https://img.shields.io/badge/Track-Software%20Track%202-0d9488.svg)](#)
+[![Standards](https://img.shields.io/badge/Standards-HL7%20FHIR%20%7C%20ABDM-10b981.svg)](./fhir-standards.js)
+[![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-blue.svg)](./sw.js)
+[![License](https://img.shields.io/badge/License-MIT-amber.svg)](./LICENSE)
+[![Presentation](https://img.shields.io/badge/Pitch%20Deck-PRESENTATION.md-purple.svg)](./PRESENTATION.md)
+
 ---
 
 ## 🌟 Executive Summary & Background

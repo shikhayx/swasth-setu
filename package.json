@@ -1,0 +1,29 @@
+{
+  "name": "swasth-setu",
+  "version": "1.0.0",
+  "description": "Patient-governed, offline-resilient healthcare continuity and diagnostic optimization platform.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "test": "node fhir-standards.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shikhayx/swasth-setu.git"
+  },
+  "keywords": [
+    "healthcare",
+    "ehr",
+    "abdm",
+    "fhir",
+    "offline-first",
+    "ayushman-bharat",
+    "hackathon"
+  ],
+  "author": "Shikha & Swasth Setu Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shikhayx/swasth-setu/issues"
+  },
+  "homepage": "https://github.com/shikhayx/swasth-setu#readme"
+}
