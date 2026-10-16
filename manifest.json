@@ -1,0 +1,18 @@
+{
+  "name": "Swasth Setu - Healthcare Continuity Platform",
+  "short_name": "SwasthSetu",
+  "description": "Patient-governed, offline-resilient healthcare continuity and diagnostic optimization platform.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0d9488",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d9488'/><text y='.9em' font-size='80' x='10'>🩺</text></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
