@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Swasth Setu - Healthcare Continuity Platform</title>
+  <meta name="theme-color" content="#0d9488">
+  <style>
+    :root {
+      color-scheme: light;
+      --soft: #f0fdfa;
+      --pri: #0d9488;
+      --pri-t: #0f766e;
+      --pri2: #14b8a6;
+      --pri-dark: #115e59;
+      --bg: #f8fafc;
+      --ink: #0f172a;
+      --mut: #64748b;
+      --card: #ffffff;
+      --line: #e2e8f0;
+      --red: #ef4444;
+      --amb: #f59e0b;
+      --grn: #10b981;
+      --inp: #ffffff;
+      --inpb: #cbd5e1;
+      --tagbg: #f1f5f9;
+      --redbg: #fef2f2;
+      --redfg: #991b1b;
+      --redbd: #fecaca;
+      --ambbg: #fffbeb;
+      --ambfg: #92400e;
+      --ambbd: #fde68a;
+      --grnbg: #ecfdf5;
+      --grnfg: #065f46;
+      --grnbd: #a7f3d0;
+      --onbg: #d1fae5;
+      --onfg: #065f46;
+      --offbg: #fef3c7;
+      --offfg: #78350f;
+      --codebg: #e6fffa;
+      --fbbg: #f8fafc;
+      --toastbg: #0f172a;
+      --toastfg: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+      background: radial-gradient(circle at 10% 15%, #f0fdfa 0%, #f8fafc 40%, #f1f5f9 100%);
+      color: var(--ink);
+      line-height: 1.5;
+      padding-block: 0 32px;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+      min-height: 100vh;
+    }
+
+    /* Top Sticky Glassmorphism Header */
+    .bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 4px 20px -2px rgba(15, 118, 110, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      flex-wrap: wrap;
+      margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+    }
+    .brand { font-size: 20px; font-weight: 800; color: var(--pri); display: flex; align-items: center; gap: 6px; }
+    .bar-r { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .bar select { padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-weight: 500; font-size: 13px; }
+    
+    .offbanner {
+      background: var(--ambbg);
+      color: var(--ambfg);
+      border-bottom: 1px solid var(--ambbd);
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    main { max-width: 980px; margin: 0 auto; padding-block: 16px; min-width: 0; }
+
+    /* Polished Card Surface */
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .card:hover {
+      box-shadow: 0 8px 24px -4px rgba(15, 118, 110, 0.06);
+    }
+
+    h2 { margin: 0 0 6px; font-size: 20px; font-weight: 700; color: var(--ink); }
+    h3 { margin: 0 0 10px; font-size: 16px; font-weight: 700; color: var(--ink); }
+    .muted { color: var(--mut); font-size: 13px; }
+
+    /* Modern Buttons */
+    .btn {
+      background: var(--pri);
+      color: #fff;
+      border: 0;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 6px rgba(13, 148, 136, 0.2);
+    }
+    .btn:hover {
+      background: var(--pri-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+    }
+    .btn.sm { padding: 6px 12px; font-size: 13px; }
+    .btn.ghost { background: transparent; border: 1px solid var(--pri); color: var(--pri); box-shadow: none; }
+    .btn.ghost:hover { background: var(--soft); }
+    .btn.out { background: #fff; color: var(--pri-t); border: 1px solid var(--pri); box-shadow: none; }
+    .btn.out:hover { background: var(--soft); }
+    .btn.red { background: var(--red); box-shadow: 0 2px 6px rgba(239, 68, 68, 0.2); }
+    .btn.red:hover { background: #dc2626; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+    .btn.amb { background: var(--amb); box-shadow: 0 2px 6px rgba(245, 158, 11, 0.2); }
+    .btn.amb:hover { background: #d97706; }
+    .btn.grey { background: #64748b; box-shadow: none; }
+    .btn.grey:hover { background: #475569; }
+
+    .chip {
+      border: 0;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .chip.on { background: var(--onbg); color: var(--onfg); }
+    .chip.off { background: var(--offbg); color: var(--offfg); }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--inpb);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      background: var(--inp);
+      color: var(--ink);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--pri);
+      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
+    }
+    label { display: block; font-size: 13px; font-weight: 600; margin: 10px 0 4px; color: #334155; }
+    .grid { display: grid; gap: 14px; }
+    .g2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .row { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+    .row > * { flex: 1; }
+
+    /* Modern Tabs */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .tab {
+      white-space: nowrap;
+      background: transparent;
+      color: var(--mut);
+      border: 0;
+      border-bottom: 3px solid transparent;
+      padding: 10px 14px;
+      border-radius: 0;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .tab:hover { color: var(--ink); }
+    .tab.act { color: var(--pri); border-color: var(--pri); }
+    .badge { background: var(--red); color: #fff; border-radius: 999px; padding: 1px 7px; font-size: 11px; margin-left: 4px; }
+
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .tag { background: var(--tagbg); color: var(--ink); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 500; }
+    .tag.red { background: var(--redbg); color: var(--redfg); }
+    .tag.grn { background: var(--grnbg); color: var(--grnfg); }
+    .tag.amb { background: var(--ambbg); color: var(--ambfg); }
+
+    /* Timeline Items */
+    .tl { border-left: 3px solid var(--line); margin-left: 8px; padding-left: 18px; }
+    .item { position: relative; margin-bottom: 16px; }
+    .item:before {
+      content: "";
+      position: absolute;
+      left: -24px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--pri);
+      border: 2px solid var(--card);
+      box-shadow: 0 0 0 2px var(--pri2);
+    }
+    .item .t { font-weight: 700; font-size: 15px; }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #e6fffa 0%, #f0fdf4 100%) !important;
+      border: 1px solid #ccfbf1 !important;
+      border-radius: 20px !important;
+      padding: 34px 20px !important;
+      box-shadow: 0 10px 25px -5px rgba(20, 184, 166, 0.1) !important;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .hero h1 { margin: 0 0 6px; font-size: 32px; color: var(--pri-t); font-weight: 800; letter-spacing: -0.5px; }
+
+    .mic {
+      width: auto !important;
+      flex: 0 !important;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--pri);
+      background: var(--card);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .mic.on { background: var(--red); color: #fff; border-color: var(--red); animation: pulse 1s infinite; }
+    @keyframes pulse { 50% { opacity: .6; } }
+
+    .codebox {
+      font-size: 36px;
+      letter-spacing: 10px;
+      font-weight: 800;
+      color: var(--pri-t);
+      text-align: center;
+      background: var(--codebg);
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px dashed var(--pri2);
+    }
+    .qr { display: flex; justify-content: center; padding: 12px; }
+    .qrfallback { font-size: 12px; word-break: break-all; background: var(--fbbg); padding: 10px; border-radius: 8px; border: 1px solid var(--line); }
+
+    .aycard { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 8px 20px rgba(234, 88, 12, 0.25); }
+    .aycard .big { font-size: 32px; font-weight: 800; }
+    .meter { height: 12px; background: rgba(255, 255, 255, .35); border-radius: 99px; overflow: hidden; margin: 10px 0; }
+    .meter > div { height: 100%; background: #fff; border-radius: 99px; }
+
+    .alert { border-radius: 14px; padding: 14px; margin-bottom: 12px; }
+    .alert.red { background: var(--redbg); border: 1px solid var(--redbd); color: var(--redfg); }
+    .alert.amb { background: var(--ambbg); border: 1px solid var(--ambbd); color: var(--ambfg); }
+    .alert.grn { background: var(--grnbg); border: 1px solid var(--grnbd); color: var(--grnfg); }
+    .alert .muted { color: inherit; opacity: .85; }
+
+    .log { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; align-items: flex-start; }
+    .log .h { font-family: monospace; font-size: 11px; color: var(--mut); margin-top: 2px; }
+    .log.em { background: var(--redbg); padding: 8px 10px; border-radius: 10px; }
+
+    /* Modal Styling */
+    #modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    #modal.show { display: flex; }
+    #modal .box {
+      background: var(--card);
+      color: var(--ink);
+      border-radius: 20px;
+      padding: 22px;
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalPop {
+      0% { transform: scale(0.94); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--toastbg);
+      color: var(--toastfg);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+      z-index: 60;
+      max-width: 90%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    pre.draft { white-space: pre-wrap; overflow-x: auto; background: var(--fbbg); padding: 12px; border-radius: 12px; font-size: 13px; border: 1px solid var(--line); }
+    details summary { cursor: pointer; font-weight: 600; color: var(--pri-t); margin-top: 6px; }
+
+    .role { border-top: 4px solid var(--pri); }
+    .role.doc { border-top-color: #2563eb; }
+    .role.doc .btn { background: #2563eb; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2); }
+    .role.doc .btn:hover { background: #1d4ed8; }
+    .flist { margin: 8px 0 12px; padding-left: 20px; display: grid; gap: 8px; font-size: 14px; color: #475569; }
+
+    /* Scanner Viewfinder & Laser Animation */
+    .scanner-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #000;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .scanner-reticle {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .scanner-target {
+      width: 200px;
+      height: 200px;
+      border: 2px solid #14b8a6;
+      border-radius: 18px;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+      position: relative;
+    }
+    .scanner-laser {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #14b8a6, #2dd4bf, transparent);
+      box-shadow: 0 0 12px #2dd4bf, 0 0 4px #ffffff;
+      animation: scanLaser 2s infinite ease-in-out;
+    }
+    @keyframes scanLaser {
+      0% { top: 6%; opacity: 0.2; }
+      50% { top: 92%; opacity: 1; }
+      100% { top: 6%; opacity: 0.2; }
+    }
+  </style>
+</head>
+<body>
+
+<header id="top"></header>
+<main id="app"></main>
+<div id="modal"></div>
+<div id="toast"></div>
+
+<script>
+'use strict';
+/* ============================================================
+   Swasth Setu - Healthcare Continuity Platform (Enhanced Edition)
+   Data is stored locally in localStorage. Compatible with ABHA,
+   dynamic share codes, offline lockscreen emergency QRs, and 
+   SHA-256 tamper-evident hash-chain audit logging.
+   ============================================================ */
+const LS = 'swasthsetu_v1', LSL = 'swasthsetu_lang';
+const LANGCODE = { en: 'en-IN', hi: 'hi-IN', mr: 'mr-IN' };
+const DAY = 86400000;
+
+/* ---------- Translations (UI in 3 languages) ---------- */
+const T = {
+  en: {
+    appName: 'Swasth Setu', tagline: 'Your health history, your permission, anywhere in India.',
+    patient: 'Patient', doctor: 'Doctor', login: 'Login', logout: 'Logout', online: 'Online', offline: 'Offline',
+    offlineMsg: 'You are offline. Everything still works; new records will sync when internet returns.',
+    timeline: 'Timeline', addRecord: 'Add record', share: 'Share', access: 'Access log', wallet: 'Insurance',
+    alerts: 'Alerts', emerCard: 'Emergency', checker: 'Repeat test?', patients: 'My patients', emergency: 'Emergency access',
+    speak: 'Speak', noVoice: 'Voice input is not available here. Use Chrome (needs internet for speech).',
+    verify: 'Verify audit log', notes: 'Notes', save: 'Save', bloodGroup: 'Blood group', allergies: 'Allergies',
+    conditions: 'Conditions', savedAmt: 'Saved by avoiding repeat tests', selectUser: 'Select user', demo: 'Demo login',
+    register: 'Create new patient', language: 'Language', pending: 'will sync', noRecords: 'No records yet.'
+  },
+  hi: {
+    appName: 'स्वस्थ सेतु', tagline: 'आपका स्वास्थ्य इतिहास, आपकी अनुमति, पूरे भारत में।',
+    patient: 'मरीज़', doctor: 'डॉक्टर', login: 'लॉगिन', logout: 'लॉगआउट', online: 'ऑनलाइन', offline: 'ऑफ़लाइन',
+    offlineMsg: 'आप ऑफ़लाइन हैं। सब कुछ चलता रहेगा; इंटरनेट आते ही नए रिकॉर्ड सिंक हो जाएँगे।',
+    timeline: 'टाइमलाइन', addRecord: 'रिकॉर्ड जोड़ें', share: 'साझा करें', access: 'एक्सेस इतिहास', wallet: 'आयुष्मान कवर',
+    alerts: 'अलर्ट', emerCard: 'आपातकालीन कार्ड', checker: 'टेस्ट चेकर', patients: 'मेरे मरीज़', emergency: 'आपातकालीन एक्सेस',
+    speak: 'बोलें', noVoice: 'यहाँ वॉइस इनपुट उपलब्ध नहीं है। Chrome इस्तेमाल करें (इंटरनेट चाहिए)।',
+    verify: 'ऑडिट लॉग जाँचें', notes: 'नोट्स', save: 'सेव करें', bloodGroup: 'ब्लड ग्रुप', allergies: 'एलर्जी',
+    conditions: 'बीमारियाँ', savedAmt: 'दोबारा टेस्ट से बचकर बचाए', selectUser: 'यूज़र चुनें', demo: 'डेमो लॉगिन',
+    register: 'नया मरीज़ बनाएँ', language: 'भाषा', pending: 'सिंक होगा', noRecords: 'अभी कोई रिकॉर्ड नहीं।'
+  },
+  mr: {
+    appName: 'स्वस्थ सेतू', tagline: 'तुमचा आरोग्य इतिहास, तुमची परवानगी, संपूर्ण भारतात.',
+    patient: 'रुग्ण', doctor: 'डॉक्टर', login: 'लॉगिन', logout: 'लॉगआउट', online: 'ऑनलाइन', offline: 'ऑफलाइन',
+    offlineMsg: 'तुम्ही ऑफलाइन आहात. सर्व काही चालू राहील; इंटरनेट आल्यावर नवीन नोंदी सिंक होतील.',
+    timeline: 'टाइमलाइन', addRecord: 'नोंद जोडा', share: 'शेअर करा', access: 'अॅक्सेस इतिहास', wallet: 'आयुष्मान कव्हर',
+    alerts: 'अलर्ट', emerCard: 'आपत्कालीन कार्ड', checker: 'टेस्ट तपासक', patients: 'माझे रुग्ण', emergency: 'आपत्कालीन अॅक्सेस',
+    speak: 'बोला', noVoice: 'येथे व्हॉइस इनपुट उपलब्ध नाही. Chrome वापरा (इंटरनेट लागते).',
+    verify: 'ऑडिट लॉग तपासा', notes: 'नोंदी', save: 'सेव्ह करा', bloodGroup: 'रक्तगट', allergies: 'अ‍ॅलर्जी',
+    conditions: 'आजार', savedAmt: 'पुन्हा टेस्ट टाळून वाचवले', selectUser: 'युजर निवडा', demo: 'डेमो लॉगिन',
+    register: 'नवीन रुग्ण तयार करा', language: 'भाषा', pending: 'सिंक होईल', noRecords: 'अजून नोंदी नाहीत.'
+  }
+};
+let ui = { lang: localStorage.getItem(LSL) || 'en', tab: 'timeline', fakeOffline: false, view: null };
+const t = (k) => (T[ui.lang] && T[ui.lang][k]) || T.en[k] || k;
+
+/* ---------- Duplicate-test rules (Clinical Validity Window in Days) ---------- */
+const DUP = {
+  'CBC': { days: 7, cost: 350 }, 'HbA1c': { days: 90, cost: 600 }, 'Lipid Profile': { days: 30, cost: 700 },
+  'ECG': { days: 14, cost: 300 }, 'X-Ray Chest': { days: 14, cost: 500 }, 'Thyroid Profile': { days: 60, cost: 550 },
+  'Blood Sugar': { days: 2, cost: 100 }
+};
+const TESTS = Object.keys(DUP);
+const CATS = ['Lab Test', 'Scan', 'Prescription', 'Visit Note'];
+const CAT_ICON = { 'Lab Test': '🧪', 'Scan': '🩻', 'Prescription': '💊', 'Visit Note': '📝' };
+
+/* ---------- Helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const iso = (d) => new Date(d).toISOString().slice(0, 10);
+const dago = (n) => iso(Date.now() - n * DAY);
+const daysSince = (d) => Math.floor((Date.now() - new Date(d).getTime()) / DAY);
+const uid = () => Math.random().toString(36).slice(2, 9);
+const inr = (n) => '₹' + Number(n).toLocaleString('en-IN');
+const fmtTime = (ts) => new Date(ts).toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+const isOnline = () => navigator.onLine && !ui.fakeOffline;
+
+/* Synth Audio Feedback for Scanner */
+function playBeep(freq = 880, type = 'sine', duration = 0.12) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + duration);
+    setTimeout(() => { ctx.close(); }, duration * 1000 + 100);
+  } catch (e) { /* ignore audio failure */ }
+}
+
+/* ---------- SHA-256 (Sync for hash chain) ---------- */
+function sha256(str) {
+  const bytes = new TextEncoder().encode(str);
+  const K = [], H = [];
+  let n = 2, c = 0;
+  while (c < 64) {
+    let p = true;
+    for (let i = 2; i * i <= n; i++) if (n % i === 0) { p = false; break; }
+    if (p) {
+      if (c < 8) H[c] = (Math.pow(n, 0.5) % 1 * 4294967296) | 0;
+      K[c] = (Math.pow(n, 1 / 3) % 1 * 4294967296) | 0;
+      c++;
+    }
+    n++;
+  }
+  const rr = (v, a) => (v >>> a) | (v << (32 - a));
+  const l = bytes.length, words = [];
+  for (let i = 0; i < l; i++) words[i >> 2] = (words[i >> 2] | 0) | (bytes[i] << (24 - (i % 4) * 8));
+  words[l >> 2] = (words[l >> 2] | 0) | (0x80 << (24 - (l % 4) * 8));
+  words[(((l + 8) >> 6) + 1) * 16 - 1] = l * 8;
+  let h = H.slice();
+  for (let j = 0; j < words.length; j += 16) {
+    const w = [];
+    for (let i = 0; i < 64; i++) {
+      if (i < 16) w[i] = words[j + i] | 0;
+      else {
+        const s0 = rr(w[i - 15], 7) ^ rr(w[i - 15], 18) ^ (w[i - 15] >>> 3);
+        const s1 = rr(w[i - 2], 17) ^ rr(w[i - 2], 19) ^ (w[i - 2] >>> 10);
+        w[i] = (w[i - 16] + s0 + w[i - 7] + s1) | 0;
+      }
+    }
+    let [a, b, c2, d, e, f, g, hh] = h;
+    for (let i = 0; i < 64; i++) {
+      const S1 = rr(e, 6) ^ rr(e, 11) ^ rr(e, 25);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (hh + S1 + ch + K[i] + w[i]) | 0;
+      const S0 = rr(a, 2) ^ rr(a, 13) ^ rr(a, 22);
+      const maj = (a & b) ^ (a & c2) ^ (b & c2);
+      const t2 = (S0 + maj) | 0;
+      hh = g; g = f; f = e; e = (d + t1) | 0; d = c2; c2 = b; b = a; a = (t1 + t2) | 0;
+    }
+    h = [(h[0] + a) | 0, (h[1] + b) | 0, (h[2] + c2) | 0, (h[3] + d) | 0, (h[4] + e) | 0, (h[5] + f) | 0, (h[6] + g) | 0, (h[7] + hh) | 0];
+  }
+  return h.map((x) => ('00000000' + (x >>> 0).toString(16)).slice(-8)).join('');
+}
+
+/* ---------- Hash-chain audit log ---------- */
+function addLogTo(s, actor, role, pid, action, detail, ts) {
+  const prev = s.logs.length ? s.logs[s.logs.length - 1].hash : 'GENESIS';
+  const when = typeof ts === 'number' ? new Date(ts).toISOString() : (ts || new Date().toISOString());
+  const e = { id: s.logs.length + 1, actor, role, pid, action, detail: detail || '', ts: when, prev };
+  e.hash = sha256([prev, actor, role, pid, action, e.detail, when].join('|'));
+  s.logs.push(e);
+}
+function addLog(actor, role, pid, action, detail) { addLogTo(S, actor, role, pid, action, detail); }
+function verifyChain() {
+  let prev = 'GENESIS';
+  for (const e of S.logs) {
+    const h = sha256([prev, e.actor, e.role, e.pid, e.action, e.detail, e.ts].join('|'));
+    if (e.prev !== prev || e.hash !== h) return { ok: false, id: e.id };
+    prev = e.hash;
+  }
+  return { ok: true };
+}
+
+/* ---------- Seed Demo Data ---------- */
+function seed() {
+  const s = { patients: [], doctors: [], records: [], grants: [], logs: [], notifs: [], savings: {} };
+  s.patients.push({
+    id: 'p1', name: 'Ramesh Patil', age: 58, blood: 'B+', allergies: 'Penicillin',
+    conditions: 'Type 2 Diabetes, Hypertension', meds: 'Metformin 500mg, Amlodipine 5mg',
+    ecName: 'Sunita Patil (wife)', ecPhone: '+91 9823456710', abha: '91-1234-5678-9012',
+    ayushman: {
+      number: 'PMJAY-MOCK-4455667788', limit: 500000, used: 120000,
+      claims: [
+        { date: dago(400), hospital: 'Civil Hospital, Pune', desc: 'Cataract surgery', amount: 45000 },
+        { date: dago(210), hospital: 'City Heart Clinic, Pune', desc: 'Angiography', amount: 75000 }
+      ]
+    }
+  });
+  s.patients.push({
+    id: 'p2', name: 'Aarav Kulkarni', age: 34, blood: 'O-', allergies: 'Sulfa drugs',
+    conditions: 'Asthma', meds: 'Salbutamol inhaler', ecName: 'Meera Kulkarni (mother)', ecPhone: '+91 9765432122',
+    abha: '91-5555-6666-7777', ayushman: null
+  });
+  s.doctors.push({ id: 'd1', name: 'Dr. Anita Sharma', hospital: 'City Hospital, Mumbai' });
+  s.doctors.push({ id: 'd2', name: 'Dr. Rahul Mehta', hospital: 'Sunrise Clinic, Pune' });
+  const R = (pid, cat, test, title, hospital, doctor, date, notes) =>
+    s.records.push({ id: uid(), pid, cat, test, title, hospital, doctor, date, notes, by: 'seed' });
+  R('p1', 'Lab Test', 'CBC', 'CBC (Complete Blood Count)', 'Lab C - Thyrocare, Pune', 'Dr. Rahul Mehta', dago(3), 'Hb 11.2 g/dL, slightly low.');
+  R('p1', 'Visit Note', '', 'Diabetes follow-up', 'Sunrise Clinic, Pune', 'Dr. Rahul Mehta', dago(12), 'Sugar controlled. Continue Metformin. BP 138/88.');
+  R('p1', 'Prescription', '', 'Diabetes & BP medicines', 'Sunrise Clinic, Pune', 'Dr. Rahul Mehta', dago(12), 'Metformin 500mg 1-0-1, Amlodipine 5mg 0-0-1.');
+  R('p1', 'Scan', 'ECG', 'ECG', 'City Heart Clinic, Pune', 'Dr. S. Joshi', dago(20), 'Normal sinus rhythm.');
+  R('p1', 'Lab Test', 'HbA1c', 'HbA1c', 'Lab C - Thyrocare, Pune', 'Dr. Rahul Mehta', dago(40), 'HbA1c 7.8%.');
+  R('p1', 'Lab Test', 'Lipid Profile', 'Lipid Profile', 'Civil Hospital, Pune', 'Dr. S. Joshi', dago(100), 'LDL 135 mg/dL.');
+  R('p2', 'Visit Note', '', 'Asthma review', 'Sunrise Clinic, Pune', 'Dr. Rahul Mehta', dago(30), 'Mild wheeze. Inhaler technique corrected.');
+  addLogTo(s, 'Dr. Rahul Mehta', 'doctor', 'p1', 'VIEWED_RECORDS', 'Opened via share code', Date.now() - 12 * DAY);
+  addLogTo(s, 'Dr. Rahul Mehta', 'doctor', 'p1', 'RECORD_ADDED', 'Visit Note: Diabetes follow-up', Date.now() - 12 * DAY + 600000);
+  addLogTo(s, 'Dr. S. Joshi', 'doctor', 'p1', 'VIEWED_RECORDS', 'Opened via share code', Date.now() - 20 * DAY);
+  addLogTo(s, 'Dr. Rahul Mehta', 'doctor', 'p1', 'VIEWED_RECORDS', 'Opened via share code', Date.now() - 3 * DAY);
+  return s;
+}
+function load() {
+  try { const x = JSON.parse(localStorage.getItem(LS)); if (x && x.patients) return x; } catch (e) { /* fresh start */ }
+  const s = seed(); try { localStorage.setItem(LS, JSON.stringify(s)); } catch (e) { /* ignore */ }
+  return s;
+}
+function save() { try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { toast('Storage full - file could not be saved'); } }
+let S = load();
+let me = null;
+const setMe = (m) => { me = m; };
+const P = (id) => S.patients.find((p) => p.id === id);
+const D = (id) => S.doctors.find((d) => d.id === id);
+let pendingRec = null, tamperBackup = null, auditMsg = null, checkMsg = null, rec = null;
+
+/* ---------- UI Utils ---------- */
+let toastT;
+function toast(m) { const el = $('#toast'); el.textContent = m; el.style.display = 'block'; clearTimeout(toastT); toastT = setTimeout(() => { el.style.display = 'none'; }, 3500); }
+function modal(html) { const m = $('#modal'); m.innerHTML = '<div class="box">' + html + '</div>'; m.classList.add('show'); }
+function closeModal() { stopScan(); $('#modal').classList.remove('show'); $('#modal').innerHTML = ''; }
+function renderQR(el, text) {
+  el.innerHTML = '';
+  if (window.QRCode) { try { new QRCode(el, { text, width: 170, height: 170, correctLevel: QRCode.CorrectLevel.L }); return; } catch (e) { /* fall through */ } }
+  el.innerHTML = '<div class="qrfallback">' + esc(text) + '</div>';
+}
+function afterRender() { document.querySelectorAll('[data-qr]').forEach((el) => renderQR(el, el.dataset.qr)); }
+
+/* ---------- Views ---------- */
+function renderTop() {
+  const langs = [['en', 'English'], ['hi', 'हिन्दी'], ['mr', 'मराठी']];
+  $('#top').innerHTML =
+    '<div class="bar"><div class="brand">🩺 <span>' + t('appName') + '</span></div><div class="bar-r">' +
+    '<button class="chip ' + (isOnline() ? 'on' : 'off') + '" data-act="toggleOffline" title="Click to simulate offline mode">' + (isOnline() ? '● ' + t('online') : '○ ' + t('offline')) + '</button>' +
+    '<select id="lang" aria-label="' + t('language') + '">' + langs.map((l) => '<option value="' + l[0] + '"' + (ui.lang === l[0] ? ' selected' : '') + '>' + l[1] + '</option>').join('') + '</select>' +
+    (me ? '<button class="btn sm ghost" data-act="logout">' + t('logout') + '</button>' : '') + '</div></div>' +
+    (!isOnline() ? '<div class="offbanner">📴 ' + t('offlineMsg') + '</div>' : '');
+}
+function render() {
+  renderTop();
+  const app = $('#app');
+  if (!me) app.innerHTML = loginView();
+  else if (me.role === 'patient') app.innerHTML = patientView();
+  else app.innerHTML = doctorView();
+  afterRender();
+}
+
+function loginView() {
+  const pOpts = S.patients.map((p) => '<option value="' + p.id + '">' + esc(p.name) + '</option>').join('');
+  const dOpts = S.doctors.map((d) => '<option value="' + d.id + '">' + esc(d.name) + ' - ' + esc(d.hospital) + '</option>').join('');
+  return '<div class="hero"><h1>' + t('appName') + '</h1><p class="muted" style="font-size:16px">' + t('tagline') + '</p><p class="muted">Choose your profile to begin</p></div>' +
+    '<div class="grid g2">' +
+    '<section class="card role pat"><h2>👤 I am a Patient</h2><div class="muted">Maintain full ownership of your records and grant temporary consent</div>' +
+    '<ul class="flist"><li>Unified timeline of all prior records</li><li>Share with 6-digit code or dynamic QR</li><li>Tamper-evident access audit log</li><li>Duplicate test checker (save money)</li><li>Ayushman Bharat cover & pre-auth</li><li>Offline emergency card for lock-screen</li></ul>' +
+    '<label>' + t('selectUser') + '</label><select id="pSel">' + pOpts + '</select>' +
+    '<p><button class="btn" data-act="loginP">Continue as patient</button></p>' +
+    '<details><summary>' + t('register') + '</summary><form data-form="register">' +
+    '<label>Name</label><input name="name" required><label>Age</label><input name="age" type="number" required>' +
+    '<label>' + t('bloodGroup') + '</label><input name="blood" placeholder="B+" required><label>' + t('allergies') + '</label><input name="allergies" placeholder="None">' +
+    '<label>' + t('conditions') + '</label><input name="conditions" placeholder="e.g. Diabetes">' +
+    '<label>Emergency contact name</label><input name="ecName" required><label>Emergency contact phone</label><input name="ecPhone" required>' +
+    '<p><button class="btn">' + t('register') + '</button></p></form></details></section>' +
+    '<section class="card role doc"><h2>🩺 I am a Doctor / Clinician</h2><div class="muted">Access complete history via smart QR scan and eliminate repeat investigations</div>' +
+    '<ul class="flist"><li>Instant QR scanner for share codes & emergency cards</li><li>Add visit notes, tests & prescriptions</li><li>Real-time duplicate test alert</li><li>Break-glass emergency triage access</li><li>Ayushman Bharat pre-auth draft generator</li><li>Voice notes with local language transcription</li></ul>' +
+    '<label>' + t('selectUser') + '</label><select id="dSel">' + dOpts + '</select>' +
+    '<p><button class="btn" data-act="loginD">Continue as doctor</button></p></section></div>' +
+    '<p class="muted" style="text-align:center">Demo tip: Open this page in two separate browser tabs (one Patient, one Doctor) to test live QR scanning & sharing.</p>';
+}
+
+function profileCard(p) {
+  return '<section class="card"><h2>' + esc(p.name) + '</h2><div class="muted">' + p.age + ' yrs · ABHA: ' + esc(p.abha || 'Not linked') + '</div>' +
+    '<div class="tags"><span class="tag red">' + t('bloodGroup') + ': ' + esc(p.blood) + '</span><span class="tag amb">' + t('allergies') + ': ' + esc(p.allergies || 'None') + '</span>' +
+    '<span class="tag">' + t('conditions') + ': ' + esc(p.conditions || 'None') + '</span></div></section>';
+}
+
+/* ----- Patient Views ----- */
+function patientView() {
+  const p = P(me.id);
+  if (!p) { setMe(null); return loginView(); }
+  const unread = S.notifs.filter((n) => n.pid === p.id && !n.read).length;
+  const tabs = [['timeline', '🗂️', t('timeline')], ['upload', '➕', t('addRecord')], ['share', '🔗', t('share')], ['access', '🛡️', t('access')],
+    ['wallet', '💳', t('wallet')], ['alerts', '🔔', t('alerts') + (unread ? '<span class="badge">' + unread + '</span>' : '')],
+    ['emer', '🚑', t('emerCard')], ['check', '🧪', t('checker')]];
+  const tabBar = '<div class="tabs">' + tabs.map((x) => '<button class="tab ' + (ui.tab === x[0] ? 'act' : '') + '" data-act="tab" data-arg="' + x[0] + '">' + x[1] + ' ' + x[2] + '</button>').join('') + '</div>';
+  const body = { timeline: tTimeline, upload: tUpload, share: tShare, access: tAccess, wallet: tWallet, alerts: tAlerts, emer: tEmer, check: tCheck }[ui.tab](p);
+  return profileCard(p) + tabBar + body;
+}
+
+function recordsHtml(pid) {
+  const rs = S.records.filter((r) => r.pid === pid).sort((a, b) => b.date.localeCompare(a.date));
+  if (!rs.length) return '<div class="card muted">' + t('noRecords') + '</div>';
+  return '<div class="card"><div class="tl">' + rs.map((r) =>
+    '<div class="item"><div class="t">' + CAT_ICON[r.cat] + ' ' + esc(r.title) + (r.pending ? ' <span class="tag amb">⏳ ' + t('pending') + '</span>' : '') + '</div>' +
+    '<div class="muted">' + esc(r.date) + ' · ' + esc(r.hospital || '-') + ' · ' + esc(r.doctor || '-') + '</div>' +
+    (r.notes ? '<div style="margin-top:4px;">' + esc(r.notes) + '</div>' : '') +
+    (r.fileData ? '<a href="' + r.fileData + '" download="' + esc(r.file) + '" style="color:var(--pri);font-weight:600;display:inline-block;margin-top:4px;">📎 ' + esc(r.file) + '</a>' : (r.file ? '<span class="muted">📎 ' + esc(r.file) + '</span>' : '')) +
+    '</div>').join('') + '</div></div>';
+}
+function tTimeline(p) {
+  const sv = S.savings[p.id] || 0;
+  return (sv ? '<div class="alert grn">💰 ' + t('savedAmt') + ': <b>' + inr(sv) + '</b></div>' : '') + recordsHtml(p.id);
+}
+
+function micBtn(id) { return '<button type="button" class="mic" data-act="mic" data-arg="' + id + '">🎤 ' + t('speak') + '</button>'; }
+function tUpload(p) {
+  return '<div class="card"><h3>➕ ' + t('addRecord') + '</h3><form data-form="upload">' +
+    '<div class="row"><div><label>Type</label><select name="cat">' + CATS.map((c) => '<option>' + c + '</option>').join('') + '</select></div>' +
+    '<div><label>Test name (if lab test / scan)</label><select name="test"><option value="">-</option>' + TESTS.map((x) => '<option>' + x + '</option>').join('') + '</select></div></div>' +
+    '<label>Title</label><input name="title" placeholder="e.g. Blood sugar report">' +
+    '<div class="row"><div><label>Hospital / Lab</label><input name="hospital"></div><div><label>Doctor</label><input name="doctor"></div><div><label>Date</label><input type="date" name="date" value="' + iso(Date.now()) + '" required></div></div>' +
+    '<label>' + t('notes') + ' (🎤 Hindi / Marathi / English)</label><div class="row"><textarea id="upNotes" name="notes" rows="3"></textarea>' + micBtn('upNotes') + '</div>' +
+    '<label>File (photo / PDF)</label><input type="file" name="file" accept="image/*,application/pdf">' +
+    '<p><button class="btn">' + t('save') + '</button></p></form></div>';
+}
+
+function activeGrants(pid) { return S.grants.filter((g) => g.pid === pid && !g.revoked && new Date(g.exp) > new Date()); }
+function tShare(p) {
+  const gs = activeGrants(p.id).slice().reverse();
+  const codes = gs.map((g, i) => '<div class="card" style="border:2px solid var(--pri)"><div class="muted" style="text-align:center">' + (i === 0 ? 'Your active share code — show this to the doctor' : 'Earlier active code') + '</div><div class="codebox">' + g.code + '</div><div class="qr" data-qr="SWASTHSETU:' + g.code + '"></div>' +
+      '<div class="muted" style="text-align:center">Expires ' + fmtTime(g.exp) + (g.did ? ' · accessed by ' + esc(D(g.did) ? D(g.did).name : '') : '') + '</div>' +
+      '<p style="text-align:center"><button class="btn sm red" data-act="revoke" data-arg="' + g.id + '">Revoke access</button></p></div>').join('');
+  return codes + '<div class="card"><h3>🔗 ' + t('share') + '</h3><p class="muted">Generate a one-time consent code. The doctor scans the QR or enters the 6-digit PIN. Access expires automatically.</p>' +
+    '<form data-form="share"><label>Access duration</label><select name="dur"><option value="1">1 hour</option><option value="24" selected>24 hours</option><option value="168">7 days</option></select>' +
+    '<p><button class="btn">Generate consent code</button></p></form></div>';
+}
+
+const ACTION_LABEL = {
+  VIEWED_RECORDS: '👁️ viewed your records', RECORD_ADDED: '➕ added a clinical record', RECORD_UPLOADED: '⬆️ uploaded a record',
+  SHARE_CREATED: '🔗 created a share code', SHARE_REVOKED: '⛔ revoked a share code', EMERGENCY_ACCESS: '🚨 EMERGENCY access (break-glass)',
+  DUP_ALERT_CANCELLED: '🛑 cancelled a duplicate test after alert', DUP_ALERT_OVERRIDDEN: '⚠️ repeated a test despite alert', CARD_LINKED: '💳 linked Ayushman card',
+  PREAUTH_DRAFT: '📄 prepared insurance pre-auth draft'
+};
+function tAccess(p) {
+  const logs = S.logs.filter((l) => l.pid === p.id).slice().reverse();
+  return '<div class="card"><h3>🛡️ ' + t('access') + '</h3><p class="muted">Every access to your data is written to a tamper-proof SHA-256 hash chain. Each entry contains the cryptographic fingerprint of the previous one. Any alteration invalidates the entire chain.</p>' +
+    '<p class="row"><button class="btn" data-act="verify">✅ ' + t('verify') + '</button>' +
+    (tamperBackup ? '<button class="btn grey" data-act="untamper">↩️ Undo tamper</button>' : '<button class="btn amb" data-act="tamper">🕵️ Demo: simulate unauthorized log edit</button>') + '</p>' +
+    (auditMsg ? '<div class="alert ' + (auditMsg.ok ? 'grn' : 'red') + '">' + (auditMsg.ok ? '✅ Cryptographic chain intact — all ' + S.logs.length + ' log entries are verified.' : '❌ Tampering detected at log #' + auditMsg.id + '! The chain signature is broken.') + '</div>' : '') +
+    logs.map((l) => '<div class="log ' + (l.action === 'EMERGENCY_ACCESS' ? 'em' : '') + '"><div style="flex:1"><b>#' + l.id + ' ' + esc(l.actor) + '</b> ' + (ACTION_LABEL[l.action] || esc(l.action)) +
+      (l.detail ? '<div class="muted">' + esc(l.detail) + '</div>' : '') + '<div class="h">hash ' + l.hash.slice(0, 12) + '… ← prev ' + (l.prev === 'GENESIS' ? 'GENESIS' : l.prev.slice(0, 8) + '…') + '</div></div><div class="muted">' + fmtTime(l.ts) + '</div></div>').join('') + '</div>';
+}
+
+function tWallet(p) {
+  const a = p.ayushman;
+  if (!a) return '<div class="card"><h3>💳 Link your Ayushman Bharat (PM-JAY) card</h3><p class="muted">Demo verification: enter any 10-20 character ID. In production this verifies via ABDM / PM-JAY National Health Authority APIs.</p>' +
+    '<form data-form="link"><label>Ayushman card number</label><input name="num" placeholder="e.g. PMJAY-1234567890" required><p><button class="btn">Link & verify</button></p></form></div>';
+  const rem = a.limit - a.used, pct = Math.round(rem / a.limit * 100);
+  return '<div class="aycard"><div>🇮🇳 Ayushman Bharat PM-JAY <span class="tag" style="color:var(--ink)">DEMO</span></div><div style="opacity:.9;font-size:13px">' + esc(a.number) + '</div>' +
+    '<div class="big">' + inr(rem) + ' <span style="font-size:15px;font-weight:400">remaining of ' + inr(a.limit) + '</span></div><div class="meter"><div style="width:' + pct + '%"></div></div>' +
+    '<div style="font-size:13px">Used this year: ' + inr(a.used) + ' · ' + pct + '% coverage balance</div></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Past claims history</h3>' + a.claims.map((c) => '<div class="log"><div style="flex:1"><b>' + esc(c.desc) + '</b><div class="muted">' + esc(c.hospital) + ' · ' + c.date + '</div></div><b>' + inr(c.amount) + '</b></div>').join('') +
+    '<p class="muted">Attending doctors can generate automated cashless pre-authorization drafts from your medical history in one click.</p></div>';
+}
+
+function tAlerts(p) {
+  const ns = S.notifs.filter((n) => n.pid === p.id).sort((a, b) => b.ts.localeCompare(a.ts));
+  const html = '<div class="alert grn">💰 ' + t('savedAmt') + ': <b>' + inr(S.savings[p.id] || 0) + '</b></div>' +
+    (ns.length ? ns.map((n) => '<div class="alert ' + (n.kind === 'family' ? 'red' : 'amb') + '">' + (n.read ? '' : '<span class="tag red">NEW</span> ') + n.msg + '<div class="muted">' + fmtTime(n.ts) + '</div></div>').join('') : '<div class="card muted">No alerts yet.</div>');
+  S.notifs.forEach((n) => { if (n.pid === p.id) n.read = true; }); save();
+  return html;
+}
+
+function tEmer(p) {
+  const qrText = ('EMERGENCY|' + p.name + '|Blood:' + p.blood + '|Allergy:' + (p.allergies || 'None') + '|Cond:' + (p.conditions || 'None') + '|Meds:' + (p.meds || 'None') + '|Call:' + p.ecName + ' ' + p.ecPhone).replace(/[^\x20-\x7E]/g, '');
+  return '<div class="card" style="border:2px solid var(--red)"><h3>🚑 ' + t('emerCard') + '</h3><p class="muted">Works 100% offline. The QR encodes vital clinical markers as plain text — first responders and doctors can scan it directly without internet or login. Set it as your phone lock-screen.</p>' +
+    '<div class="qr" data-qr="' + esc(qrText) + '"></div>' +
+    '<div class="tags"><span class="tag red">Blood: ' + esc(p.blood) + '</span><span class="tag amb">Allergy: ' + esc(p.allergies || 'None') + '</span><span class="tag">' + esc(p.conditions || '') + '</span></div>' +
+    '<p><b>Current medications:</b> ' + esc(p.meds || '-') + '<br><b>Emergency contact:</b> ' + esc(p.ecName) + ' <a href="tel:' + esc(p.ecPhone) + '" style="color:var(--pri);font-weight:600;">' + esc(p.ecPhone) + '</a></p></div>';
+}
+
+function tCheck(p) {
+  return '<div class="card"><h3>🧪 ' + t('checker') + '</h3><p class="muted">Before paying for a diagnostic test, verify if you already have valid results from a recent visit. Save out-of-pocket expenses.</p>' +
+    '<form data-form="check"><label>Test</label><select name="test">' + TESTS.map((x) => '<option>' + x + '</option>').join('') + '</select><p><button class="btn">Check test validity</button></p></form>' +
+    (checkMsg || '') + '</div>';
+}
+
+/* ----- Doctor Views ----- */
+function doctorView() {
+  const d = D(me.id);
+  if (!d) { setMe(null); return loginView(); }
+  if (ui.view) return patientDetail(d);
+  const tabs = [['home', '👥', t('patients')], ['emer', '🚨', t('emergency')]];
+  const tabBar = '<div class="tabs">' + tabs.map((x) => '<button class="tab ' + (ui.tab === x[0] ? 'act' : '') + '" data-act="tab" data-arg="' + x[0] + '">' + x[1] + ' ' + x[2] + '</button>').join('') + '</div>';
+  const head = '<section class="card"><h2>' + esc(d.name) + '</h2><div class="muted">' + esc(d.hospital) + '</div></section>';
+  if (ui.tab === 'emer') {
+    return head + tabBar + '<div class="card" style="border:2px solid var(--red)"><h3>🚨 Break-glass emergency triage access</h3>' +
+      '<p class="muted">Use only when the patient is unconscious or in critical condition. Shows <b>vital baselines only</b> (blood group, allergies, active meds). Immediately alerts the family and creates an immutable audit trail entry.</p>' +
+      '<form data-form="emer"><label>Patient ABHA ID or name</label><input name="q" placeholder="e.g. 91-1234-5678-9012 or Ramesh" required>' +
+      '<label>Reason for emergency access</label><div class="row"><textarea id="emReason" name="reason" rows="2" placeholder="e.g. Road accident trauma, unconscious in ER" required></textarea>' + micBtn('emReason') + '</div>' +
+      '<label style="font-weight:400"><input type="checkbox" name="ok" required style="width:auto"> I declare under medical oath that this is a life-threatening emergency.</label>' +
+      '<p><button class="btn red">🚨 Activate emergency access</button></p></form></div>';
+  }
+  const mine = S.grants.filter((g) => g.did === d.id && !g.revoked && new Date(g.exp) > new Date());
+  return head + tabBar + '<div class="card"><h3>🔗 Access Patient History</h3>' +
+    '<p class="muted">Quickly scan the patient\'s Share QR or offline Emergency Lockscreen Card using the camera.</p>' +
+    '<div class="row" style="margin-bottom:14px;"><button type="button" class="btn" style="flex:1;" data-act="scan">📷 Launch Smart Camera Scanner</button>' +
+    '<label class="btn out" style="text-align:center;cursor:pointer;margin:0;flex:1;">🖼️ Scan from Saved Image<input id="qrFile" type="file" accept="image/*" capture="environment" hidden></label></div>' +
+    '<form data-form="opencode"><label>Or enter 6-digit manual share code</label><div class="row"><input name="code" placeholder="6-digit PIN" inputmode="numeric" required><button class="btn" style="flex:0">Open</button></div></form></div>' +
+    '<div class="card"><h3>' + t('patients') + '</h3>' + (mine.length ? mine.map((g) => '<div class="log"><div style="flex:1"><b>' + esc(P(g.pid).name) + '</b><div class="muted">Access active until ' + fmtTime(g.exp) + '</div></div><button class="btn sm" data-act="openGrant" data-arg="' + g.id + '">View records</button></div>').join('') : '<div class="muted">No currently active patient grants. Ask the patient to generate a share code or scan their QR.</div>') + '</div>';
+}
+
+function patientDetail(d) {
+  const v = ui.view, p = P(v.pid);
+  const back = '<p><button class="btn sm out" data-act="back">← Back to Patient List</button></p>';
+  if (v.mode === 'emergency') {
+    return back + '<div class="alert red"><h2>🚨 EMERGENCY ACCESS — Vital Info Only</h2><div class="muted">Patient family alerted. This access has been recorded permanently in the SHA-256 audit log.</div></div>' +
+      '<div class="card"><h2>' + esc(p.name) + ', ' + p.age + ' yrs</h2><div class="tags" style="margin:8px 0;"><span class="tag red" style="font-size:16px;font-weight:bold;">Blood: ' + esc(p.blood) + '</span><span class="tag amb" style="font-size:16px;font-weight:bold;">Allergies: ' + esc(p.allergies || 'None') + '</span></div>' +
+      '<p><b>Known conditions:</b> ' + esc(p.conditions || '-') + '<br><b>Current medications:</b> ' + esc(p.meds || '-') + '<br><b>Emergency contact:</b> ' + esc(p.ecName) + ' <a href="tel:' + esc(p.ecPhone) + '" style="color:var(--pri);font-weight:600;">' + esc(p.ecPhone) + '</a></p></div>' +
+      '<div class="card muted">Full diagnostic history, billing records, and insurance documents are locked in emergency mode. For full history, request a standard consent code from the family.</div>';
+  }
+  const a = p.ayushman;
+  let ins = '<div class="card"><h3>💳 Insurance (Ayushman Bharat PM-JAY)</h3>';
+  if (!a) ins += '<div class="muted">No Ayushman card linked by patient.</div>';
+  else {
+    const rem = a.limit - a.used;
+    ins += '<div class="alert grn">✅ Cashless eligible at empanelled hospitals (demo). Remaining cover: <b>' + inr(rem) + '</b> of ' + inr(a.limit) + '</div>' +
+      '<form data-form="preauth"><div class="row"><div><label>Proposed procedure</label><input name="proc" placeholder="e.g. Angioplasty / Dialysis" required></div><div><label>Estimated cost (₹)</label><input name="cost" type="number" required></div></div>' +
+      '<p><button class="btn">📄 Generate pre-authorization draft</button></p></form>';
+  }
+  ins += '</div>';
+  return back + profileCard(p) +
+    '<div class="card"><h3>➕ Add Consultation / Prescription / Investigation</h3><form data-form="addrec">' +
+    '<div class="row"><div><label>Type</label><select name="cat">' + CATS.map((c) => '<option>' + c + '</option>').join('') + '</select></div>' +
+    '<div><label>Diagnostic Test to Order (triggers duplicate alert)</label><select name="test"><option value="">-</option>' + TESTS.map((x) => '<option>' + x + '</option>').join('') + '</select></div></div>' +
+    '<label>Title / Diagnosis</label><input name="title" placeholder="e.g. Diabetic Neuropathy Follow-up">' +
+    '<label>' + t('notes') + ' (🎤 Voice dictation)</label><div class="row"><textarea id="drNotes" name="notes" rows="3" placeholder="Clinical findings, medication dosage..."></textarea>' + micBtn('drNotes') + '</div>' +
+    '<p><button class="btn">' + t('save') + '</button></p></form></div>' + ins + recordsHtml(p.id);
+}
+
+/* ---------- Actions & State Management ---------- */
+const A = {
+  tab(x) { ui.tab = x; render(); },
+  loginP() { setMe({ role: 'patient', id: $('#pSel').value }); ui.tab = 'timeline'; ui.view = null; render(); },
+  loginD() { setMe({ role: 'doctor', id: $('#dSel').value }); ui.tab = 'home'; ui.view = null; render(); },
+  logout() { setMe(null); ui.view = null; auditMsg = null; checkMsg = null; render(); },
+  toggleOffline() { ui.fakeOffline = !ui.fakeOffline; if (isOnline()) trySync(); render(); },
+  back() { ui.view = null; render(); },
+  revoke(id) { const g = S.grants.find((x) => x.id === id); if (g) { g.revoked = true; addLog(P(g.pid).name, 'patient', g.pid, 'SHARE_REVOKED', 'Code ' + g.code); save(); toast('Access revoked immediately'); render(); } },
+  openGrant(id) { const g = S.grants.find((x) => x.id === id); if (!g) return; addLog(D(me.id).name, 'doctor', g.pid, 'VIEWED_RECORDS', 'Re-opened shared records'); save(); ui.view = { pid: g.pid, mode: 'grant' }; render(); },
+  verify() { auditMsg = verifyChain(); render(); },
+  tamper() {
+    const l = S.logs.find((x) => x.role === 'doctor' && x.pid === me.id);
+    if (!l) { toast('No doctor audit log available to tamper.'); return; }
+    tamperBackup = { id: l.id, actor: l.actor }; l.actor = 'Unauthorized Actor'; save(); auditMsg = null; toast('Log #' + l.id + ' altered. Click "Verify audit log" to test detection.'); render();
+  },
+  untamper() { const l = S.logs.find((x) => x.id === tamperBackup.id); if (l) l.actor = tamperBackup.actor; tamperBackup = null; save(); auditMsg = null; render(); },
+  dupCancel() {
+    const { rec: r, dup, test } = pendingRec; const d = D(me.id), p = P(r.pid);
+    S.savings[p.id] = (S.savings[p.id] || 0) + dup.rule.cost;
+    S.notifs.push({ id: uid(), pid: p.id, kind: 'dup', ts: new Date().toISOString(), read: false, msg: '🛑 <b>Repeat test avoided.</b> ' + esc(d.name) + ' reviewed your history and cancelled duplicate <b>' + esc(test) + '</b> (done ' + dup.ago + ' day(s) ago at ' + esc(dup.r.hospital) + '). Saved: <b>' + inr(dup.rule.cost) + '</b>.' });
+    addLog(d.name, 'doctor', p.id, 'DUP_ALERT_CANCELLED', test + ' (done ' + dup.ago + ' days ago)');
+    pendingRec = null; save(); closeModal(); toast('Redundant test cancelled. Patient saved ' + inr(dup.rule.cost)); render();
+  },
+  dupForce() {
+    const reason = ($('#dupReason').value || '').trim(); if (!reason) { toast('Please specify a clinical justification.'); return; }
+    const { rec: r, dup, test } = pendingRec; const d = D(me.id);
+    r.notes = (r.notes ? r.notes + ' ' : '') + '[Repeat justified: ' + reason + ']';
+    S.notifs.push({ id: uid(), pid: r.pid, kind: 'dup', ts: new Date().toISOString(), read: false, msg: '⚠️ ' + esc(d.name) + ' ordered repeat <b>' + esc(test) + '</b> (last done ' + dup.ago + ' day(s) ago). Clinical justification: ' + esc(reason) });
+    addLog(d.name, 'doctor', r.pid, 'DUP_ALERT_OVERRIDDEN', test + ' - ' + reason);
+    commitRecord(r); pendingRec = null; closeModal();
+  },
+  closeModal() { closeModal(); },
+  copy(id) { const el = $('#' + id); if (navigator.clipboard) navigator.clipboard.writeText(el.textContent).then(() => toast('Copied to clipboard')); },
+  mic(id, btn) {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { toast(t('noVoice')); return; }
+    if (rec) { rec.stop(); return; }
+    rec = new SR(); rec.lang = LANGCODE[ui.lang]; rec.interimResults = false; rec.continuous = false;
+    btn.classList.add('on');
+    rec.onresult = (ev) => { const txt = ev.results[0][0].transcript; const ta = $('#' + id); ta.value = (ta.value ? ta.value + ' ' : '') + txt; };
+    rec.onend = () => { btn.classList.remove('on'); rec = null; };
+    rec.onerror = (ev) => {
+      const m = { 'not-allowed': 'Microphone permission blocked.', 'service-not-allowed': 'Microphone blocked. Open via HTTPS or localhost.', 'no-speech': 'No speech heard.', 'audio-capture': 'No microphone detected.', 'network': 'Speech recognition requires active internet.' };
+      toast(m[ev.error] || ('Voice error: ' + ev.error));
+    };
+    try { rec.start(); } catch (e) { rec = null; btn.classList.remove('on'); }
+  }
+};
+
+function commitRecord(r) {
+  r.pending = !isOnline();
+  S.records.push(r);
+  const actor = me.role === 'doctor' ? D(me.id).name : P(me.id).name;
+  addLog(actor, me.role, r.pid, me.role === 'doctor' ? 'RECORD_ADDED' : 'RECORD_UPLOADED', r.cat + ': ' + r.title);
+  save(); toast(r.pending ? 'Saved locally (offline) — will sync when online' : 'Record saved successfully'); render();
+}
+function trySync() {
+  if (!isOnline()) return;
+  const n = S.records.filter((r) => r.pending);
+  if (n.length) { n.forEach((r) => { r.pending = false; }); save(); toast('🔄 Synced ' + n.length + ' offline record(s)'); }
+}
+
+const F = {
+  register(f) {
+    const d = Object.fromEntries(new FormData(f));
+    const p = { id: 'p' + uid(), name: d.name, age: +d.age, blood: d.blood, allergies: d.allergies || 'None', conditions: d.conditions || 'None', meds: '', ecName: d.ecName, ecPhone: d.ecPhone, abha: '91-' + Math.floor(1000 + Math.random() * 9000) + '-' + Math.floor(1000 + Math.random() * 9000) + '-' + Math.floor(1000 + Math.random() * 9000), ayushman: null };
+    S.patients.push(p); save(); setMe({ role: 'patient', id: p.id }); ui.tab = 'timeline'; toast('Profile created with demo ABHA ID'); render();
+  },
+  upload(f) {
+    const d = Object.fromEntries(new FormData(f)); const file = f.querySelector('input[type=file]').files[0];
+    const r = { id: uid(), pid: me.id, cat: d.cat, test: d.test, title: d.title || d.test || d.cat, hospital: d.hospital, doctor: d.doctor || 'Self-uploaded', date: d.date, notes: d.notes, by: 'patient' };
+    const done = () => { ui.tab = 'timeline'; commitRecord(r); };
+    if (file) {
+      r.file = file.name;
+      if (file.size < 500000) { const fr = new FileReader(); fr.onload = () => { r.fileData = fr.result; done(); }; fr.readAsDataURL(file); return; }
+      toast('File is large — only metadata stored in demo.');
+    }
+    done();
+  },
+  share(f) {
+    const hrs = +new FormData(f).get('dur'); const p = P(me.id);
+    const g = { id: uid(), pid: p.id, code: String(Math.floor(100000 + Math.random() * 900000)), exp: new Date(Date.now() + hrs * 3600000).toISOString(), did: null, revoked: false };
+    S.grants.push(g); addLog(p.name, 'patient', p.id, 'SHARE_CREATED', 'Code valid for ' + hrs + 'h'); save(); render(); window.scrollTo(0, 0); toast('Code generated: ' + g.code);
+  },
+  link(f) {
+    const num = new FormData(f).get('num').trim();
+    if (!/^[A-Za-z0-9-]{10,20}$/.test(num)) { toast('Invalid card format (must be 10-20 characters).'); return; }
+    const p = P(me.id); p.ayushman = { number: num, limit: 500000, used: 0, claims: [] }; addLog(p.name, 'patient', p.id, 'CARD_LINKED', 'Ayushman card linked'); save(); toast('Ayushman PM-JAY verified'); render();
+  },
+  check(f) {
+    const test = new FormData(f).get('test'); const dup = dupCheck(me.id, test);
+    checkMsg = dup
+      ? '<div class="alert amb">⚠️ <b>' + esc(test) + '</b> was already done <b>' + dup.ago + ' day(s) ago</b> at ' + esc(dup.r.hospital) + '. A repeat is clinically redundant before <b>' + dup.nextOk + '</b>. Show this to your doctor to save ~' + inr(dup.rule.cost) + '.</div>'
+      : '<div class="alert grn">✅ No recent <b>' + esc(test) + '</b> found in your medical records. Proceeding with this test is appropriate.</div>';
+    render();
+  },
+  opencode(f) { openByCode(new FormData(f).get('code').trim()); },
+  addrec(f) {
+    const d = Object.fromEntries(new FormData(f)); const doc = D(me.id);
+    const r = { id: uid(), pid: ui.view.pid, cat: d.cat, test: d.test, title: d.title || d.test || d.cat, hospital: doc.hospital, doctor: doc.name, date: iso(Date.now()), notes: d.notes, by: 'doctor' };
+    if (d.test) {
+      const dup = dupCheck(r.pid, d.test);
+      if (dup) {
+        pendingRec = { rec: r, dup, test: d.test };
+        modal('<h2>⚠️ Duplicate Test Alert</h2><div class="alert amb"><b>' + esc(d.test) + '</b> was performed <b>' + dup.ago + ' day(s) ago</b> at <b>' + esc(dup.r.hospital) + '</b> (' + esc(dup.r.date) + ').<br>Standard clinical re-test window is ' + dup.rule.days + ' days. Ordering this test costs the patient approximately <b>' + inr(dup.rule.cost) + '</b>.</div>' +
+          '<p><button class="btn" data-act="dupCancel">🛑 Cancel Order (Save ' + inr(dup.rule.cost) + ')</button></p><hr><label>Clinical Justification to Override:</label><input id="dupReason" placeholder="e.g. Acute infection, internal bleeding suspicion"><p><button class="btn amb" data-act="dupForce">Proceed with Duplicate Test</button> <button class="btn grey" data-act="closeModal">Dismiss</button></p>');
+        return;
+      }
+    }
+    commitRecord(r);
+  },
+  emer(f) {
+    const d = Object.fromEntries(new FormData(f)); const q = d.q.trim().toLowerCase(); const doc = D(me.id);
+    const p = S.patients.find((x) => (x.abha || '').toLowerCase() === q || x.name.toLowerCase().includes(q));
+    if (!p) { toast('Patient not found in registry'); return; }
+    addLog(doc.name, 'doctor', p.id, 'EMERGENCY_ACCESS', 'Reason: ' + d.reason + ' @ ' + doc.hospital);
+    const msg = '🚨 <b>Emergency access</b> to your vital records by <b>' + esc(doc.name) + '</b> (' + esc(doc.hospital) + '). Reason: ' + esc(d.reason) + '<br><span class="muted">📲 SMS broadcast dispatched to ' + esc(p.ecName) + ' ' + esc(p.ecPhone) + '</span>';
+    S.notifs.push({ id: uid(), pid: p.id, kind: 'family', ts: new Date().toISOString(), read: false, msg });
+    save(); toast('📲 Family alert triggered: ' + p.ecName); ui.view = { pid: p.id, mode: 'emergency' }; render();
+  },
+  preauth(f) {
+    const d = Object.fromEntries(new FormData(f)); const p = P(ui.view.pid); const doc = D(me.id); const a = p.ayushman; const rem = a.limit - a.used; const cost = +d.cost;
+    const rs = S.records.filter((r) => r.pid === p.id).sort((x, y) => y.date.localeCompare(x.date)).slice(0, 5);
+    const text = 'PRE-AUTHORIZATION REQUEST (DRAFT - ABDM / PM-JAY)\nScheme: Ayushman Bharat PM-JAY   Card ID: ' + a.number + '\nPatient: ' + p.name + ', ' + p.age + ' yrs   ABHA: ' + p.abha + '\nHospital: ' + doc.hospital + '   Physician: ' + doc.name + '\nProposed Procedure: ' + d.proc + '\nEstimated Cost: ' + inr(cost) + '   Remaining Balance: ' + inr(rem) + '\nBaseline Conditions: ' + p.conditions + '\nDocumented Allergies: ' + p.allergies + '\nSupporting Prior Records (Auto-Aggregated):\n' + rs.map((r) => ' - ' + r.date + ' ' + r.title + ' (' + r.hospital + ')').join('\n');
+    addLog(doc.name, 'doctor', p.id, 'PREAUTH_DRAFT', d.proc + ' ' + inr(cost));
+    save();
+    modal('<h3>📄 Cashless Pre-Auth Request Draft</h3>' + (cost > rem ? '<div class="alert red">⚠️ Estimated cost exceeds remaining PM-JAY cover by ' + inr(cost - rem) + '.</div>' : '<div class="alert grn">✅ Fully covered under current PM-JAY balance.</div>') + '<pre class="draft" id="draftTxt">' + esc(text) + '</pre><p><button class="btn" data-act="copy" data-arg="draftTxt">Copy Draft Text</button> <button class="btn grey" data-act="closeModal">Close</button></p>');
+  }
+};
+
+function dupCheck(pid, test) {
+  const rule = DUP[test]; if (!rule) return null;
+  const rs = S.records.filter((r) => r.pid === pid && r.test === test).sort((a, b) => b.date.localeCompare(a.date));
+  if (!rs.length) return null;
+  const r = rs[0], ago = daysSince(r.date);
+  if (ago < rule.days) return { r, ago, rule, nextOk: iso(new Date(r.date).getTime() + rule.days * DAY) };
+  return null;
+}
+
+/* ============================================================
+   ENHANCED SCANNER MODULE: Multi-Format Intelligent QR Decoder
+   Handles: 
+   1. Dynamic Share Codes (SWASTHSETU:123456)
+   2. Offline Emergency Lockscreen Cards (EMERGENCY|...)
+   3. Direct 6-Digit Codes
+   ============================================================ */
+let scanStream = null, scanRaf = 0, currentTrack = null, torchActive = false;
+
+function stopScan() {
+  cancelAnimationFrame(scanRaf);
+  if (scanStream) {
+    scanStream.getTracks().forEach((tr) => tr.stop());
+    scanStream = null;
+    currentTrack = null;
+    torchActive = false;
+  }
+}
+
+function openByCode(code) {
+  const g = S.grants.find((x) => x.code === code && !x.revoked && new Date(x.exp) > new Date());
+  if (!g) { toast('Invalid or expired share code'); return false; }
+  g.did = me.id;
+  addLog(D(me.id).name, 'doctor', g.pid, 'VIEWED_RECORDS', 'Opened via share code');
+  save();
+  ui.view = { pid: g.pid, mode: 'grant' };
+  playBeep(980, 'sine', 0.15);
+  if (navigator.vibrate) navigator.vibrate(80);
+  toast('Access granted for ' + P(g.pid).name);
+  render();
+  return true;
+}
+
+function handleScannedData(rawText) {
+  const txt = String(rawText).trim();
+
+  // Format 1: Standard Swasth Setu Share QR or direct 6-digit PIN
+  const m = txt.match(/SWASTHSETU:(\d{6})/) || txt.match(/^(\d{6})$/);
+  if (m) {
+    stopScan();
+    closeModal();
+    return openByCode(m[1]);
+  }
+
+  // Format 2: Offline Emergency Lockscreen Card QR
+  if (txt.startsWith('EMERGENCY|')) {
+    stopScan();
+    closeModal();
+    playBeep(440, 'triangle', 0.25);
+    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+    const parts = txt.split('|');
+    const name = parts[1] || 'Unknown Patient';
+    const blood = (parts[2] || '').replace('Blood:', '');
+    const allergy = (parts[3] || '').replace('Allergy:', '');
+    const cond = (parts[4] || '').replace('Cond:', '');
+    const meds = (parts[5] || '').replace('Meds:', '');
+    const callStr = (parts[6] || '').replace('Call:', '');
+
+    modal(`
+      <div class="alert red">
+        <h2>🚨 EMERGENCY QR DETECTED</h2>
+        <div class="muted">Scanned directly from offline emergency card / lock-screen.</div>
+      </div>
+      <div class="card" style="border: 2px solid var(--red);">
+        <h2>${esc(name)}</h2>
+        <div class="tags" style="margin: 8px 0 14px;">
+          <span class="tag red" style="font-size:15px; font-weight:700;">🩸 Blood: ${esc(blood || 'Unknown')}</span>
+          <span class="tag amb" style="font-size:15px; font-weight:700;">⚠️ Allergies: ${esc(allergy || 'None')}</span>
+        </div>
+        <p><b>Known Conditions:</b> ${esc(cond || 'None reported')}<br>
+        <b>Active Medications:</b> ${esc(meds || 'None reported')}</p>
+        <div class="alert grn" style="margin-top:12px;">
+          <b>📞 Emergency Contact:</b> ${esc(callStr)}
+        </div>
+      </div>
+      <p style="text-align:right;"><button class="btn" data-act="closeModal">Dismiss Triage Card</button></p>
+    `);
+    return true;
+  }
+
+  // Format 3: Generic fallback
+  toast('Scanned content is not a recognized Swasth Setu code.');
+  return false;
+}
+
+A.scan = async function () {
+  if (!window.jsQR) { toast('Scanner library is loading. Please verify internet connectivity.'); return; }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { toast('Camera not available on this browser. Use "Scan from Saved Image".'); return; }
+
+  modal(`
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <h3 style="margin:0;">📷 Scan Patient QR Code</h3>
+      <button class="btn sm grey" data-act="stopScanBtn">Close</button>
+    </div>
+    <div class="scanner-wrap">
+      <video id="scanVid" playsinline muted style="width:100%; height:270px; object-fit:cover; display:block;"></video>
+      <div class="scanner-reticle">
+        <div class="scanner-target">
+          <div class="scanner-laser"></div>
+        </div>
+      </div>
+      <div style="position:absolute; bottom:10px; left:0; right:0; display:flex; justify-content:center; gap:8px;">
+        <button id="torchBtn" type="button" class="btn sm" style="background:rgba(255,255,255,0.25); backdrop-filter:blur(6px); color:#fff; display:none;">🔦 Flashlight</button>
+      </div>
+    </div>
+    <p class="muted" style="text-align:center; margin:8px 0 0;">Align the patient's Share QR or Offline Emergency Card within the frame.</p>
+  `);
+
+  try {
+    scanStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+    });
+    currentTrack = scanStream.getVideoTracks()[0];
+  } catch (e) {
+    closeModal();
+    toast('Camera access was denied. Please allow permissions or upload a photo.');
+    return;
+  }
+
+  const v = $('#scanVid');
+  v.srcObject = scanStream;
+  try { await v.play(); } catch (e) { /* ignore */ }
+
+  // Flashlight / Torch Support Check
+  const torchBtn = $('#torchBtn');
+  if (torchBtn && currentTrack && typeof currentTrack.getCapabilities === 'function') {
+    const caps = currentTrack.getCapabilities();
+    if (caps.torch) {
+      torchBtn.style.display = 'inline-flex';
+      torchBtn.onclick = async () => {
+        torchActive = !torchActive;
+        await currentTrack.applyConstraints({ advanced: [{ torch: torchActive }] });
+        torchBtn.textContent = torchActive ? '⚡ Torch Off' : '🔦 Torch On';
+      };
+    }
+  }
+
+  const c = document.createElement('canvas');
+  const x = c.getContext('2d', { willReadFrequently: true });
+  const tick = () => {
+    if (!scanStream) return;
+    if (v.readyState >= 2 && v.videoWidth) {
+      c.width = v.videoWidth;
+      c.height = v.videoHeight;
+      x.drawImage(v, 0, 0);
+      const d = x.getImageData(0, 0, c.width, c.height);
+      const r = window.jsQR(d.data, d.width, d.height, { inversionAttempts: 'attemptBoth' });
+      if (r && r.data) {
+        if (handleScannedData(r.data)) return;
+      }
+    }
+    scanRaf = requestAnimationFrame(tick);
+  };
+  tick();
+};
+A.stopScanBtn = function () { stopScan(); closeModal(); };
+
+/* Scan From Photo / Screenshot */
+document.addEventListener('change', (e) => {
+  if (e.target.id !== 'qrFile') return;
+  const file = e.target.files[0];
+  if (!file) return;
+  if (!window.jsQR) { toast('Scanner library is loading. Please check internet.'); return; }
+  const img = new Image(), url = URL.createObjectURL(file);
+  img.onload = () => {
+    const sc = Math.min(1, 1200 / Math.max(img.width, img.height));
+    const c = document.createElement('canvas');
+    c.width = Math.round(img.width * sc);
+    c.height = Math.round(img.height * sc);
+    const x = c.getContext('2d');
+    x.drawImage(img, 0, 0, c.width, c.height);
+    const d = x.getImageData(0, 0, c.width, c.height);
+    const r = window.jsQR(d.data, d.width, d.height, { inversionAttempts: 'attemptBoth' });
+    URL.revokeObjectURL(url);
+    e.target.value = '';
+    if (r && r.data) {
+      handleScannedData(r.data);
+    } else {
+      toast('No recognizable Swasth Setu QR found in this image. Try a clearer image.');
+    }
+  };
+  img.onerror = () => toast('Could not load image file.');
+  img.src = url;
+});
+
+/* ---------- Event Listeners ---------- */
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  const fn = A[el.dataset.act];
+  if (fn) fn(el.dataset.arg, el);
+});
+document.addEventListener('submit', (e) => {
+  const f = e.target.closest('form[data-form]');
+  if (!f) return;
+  e.preventDefault();
+  F[f.dataset.form](f);
+});
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'lang') {
+    ui.lang = e.target.value;
+    localStorage.setItem(LSL, ui.lang);
+    render();
+  }
+});
+window.addEventListener('online', () => { trySync(); render(); });
+window.addEventListener('offline', () => { render(); });
+window.addEventListener('storage', (e) => {
+  if (e.key === LS && e.newValue) {
+    try { S = JSON.parse(e.newValue); render(); } catch (x) { /* ignore */ }
+  }
+});
+
+render();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" onload="afterRender()"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+
+</body>
+</html>
